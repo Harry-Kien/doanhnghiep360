@@ -1,5 +1,4 @@
 ﻿import Link from "next/link";
-import Image from "next/image";
 import { ArrowRight, Check, Quote } from "lucide-react";
 import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
@@ -33,6 +32,12 @@ const DIFF = [
   { t: "Luật sư duyệt cuối", d: "Công nghệ chỉ rà soát và lập bản nháp. Mọi kết luận pháp lý bắt buộc qua luật sư phụ trách phê duyệt — không có ngoại lệ." },
   { t: "Mỗi phát hiện có chứng cứ", d: "Không đưa nhận định vào báo cáo nếu thiếu bằng chứng từ tài liệu. Rủi ro nào cũng truy được về nguồn." },
   { t: "Hồ sơ minh bạch", d: "Mã hồ sơ riêng, kho tài liệu theo cấu trúc, nhật ký mọi thao tác và phiên bản báo cáo — bài bản như một firm." },
+];
+
+const TEAM_ASSURANCE = [
+  { t: "Luật sư phụ trách hồ sơ", d: "Một người chịu trách nhiệm xuyên suốt từ phạm vi khảo sát, rủi ro trọng yếu đến kết luận cuối cùng." },
+  { t: "Kiểm soát căn cứ pháp lý", d: "Mỗi phát hiện cần gắn với tài liệu, quy định liên quan và mức độ ảnh hưởng thực tế của doanh nghiệp." },
+  { t: "Bàn giao có lộ trình", d: "Không chỉ nêu vấn đề, báo cáo phải đi kèm ưu tiên xử lý và bước hành động trong 30-90 ngày." },
 ];
 
 const FAQS = [
@@ -309,17 +314,17 @@ export default function LandingPage() {
               mỗi kết luận pháp lý đều có người chịu trách nhiệm.
             </p>
           </div>
-          <figure className="mx-auto mt-12 max-w-4xl overflow-hidden rounded-2xl border border-border bg-[#eaf2fb] shadow-sm ring-1 ring-black/5">
-            <Image
-              src="/brand/team-360.webp"
-              alt="Đội ngũ luật sư Luật Ngọc Sơn — Khảo sát Pháp lý Doanh nghiệp 360°"
-              width={1600}
-              height={931}
-              className="h-auto w-full"
-            />
-          </figure>
-          <p className="mt-4 text-center text-sm text-muted-foreground">
-            Đội ngũ Luật sư — Luật Ngọc Sơn
+          <div className="mx-auto mt-12 grid max-w-5xl gap-4 md:grid-cols-3">
+            {TEAM_ASSURANCE.map((item, index) => (
+              <article key={item.t} className="rounded-xl border border-border bg-card p-6 shadow-sm">
+                <span className="font-mono text-xs font-semibold text-gold">0{index + 1}</span>
+                <h3 className="mt-4 font-display text-xl font-semibold">{item.t}</h3>
+                <p className="mt-3 text-sm leading-6 text-muted-foreground">{item.d}</p>
+              </article>
+            ))}
+          </div>
+          <p className="mt-6 text-center text-sm text-muted-foreground">
+            Luật Ngọc Sơn trực tiếp kiểm soát chất lượng báo cáo trước khi bàn giao.
           </p>
         </div>
       </section>
