@@ -1,4 +1,4 @@
-// Xác thực khách hàng bằng OTP email. Mock ⇒ trả devCode để demo; SMTP ⇒ gửi thật.
+﻿// Xác thực khách hàng bằng OTP email. Mock ⇒ trả devCode để demo; SMTP ⇒ gửi thật.
 import { createHmac, randomInt } from "node:crypto";
 import { getDb, commit } from "@/server/db";
 import { createId } from "@/lib/utils";
@@ -73,7 +73,7 @@ export async function issueOtpForCase(caseId: string): Promise<OtpIssueResult> {
   const adapter = getEmailAdapter();
   await adapter.send({
     to: email,
-    subject: "Mã xác thực — Khảo sát Pháp lý 360° (Ngọc Sơn & Partners)",
+    subject: "Mã xác thực — Khảo sát Pháp lý 360° (Luật Ngọc Sơn)",
     text: `Mã xác thực của bạn là: ${code} (hết hạn sau 10 phút).`,
     html: `<p>Mã xác thực phiếu yêu cầu khảo sát của bạn là:</p><h2 style="letter-spacing:4px">${code}</h2><p>Mã hết hạn sau 10 phút.</p>`,
   });
@@ -201,7 +201,7 @@ export async function verifyOtp(challengeId: string, code: string): Promise<{ ca
   const adapter = getEmailAdapter();
   await adapter.send({
     to: ch.email,
-    subject: "Đã tiếp nhận phiếu yêu cầu khảo sát — Ngọc Sơn & Partners",
+    subject: "Đã tiếp nhận phiếu yêu cầu khảo sát — Luật Ngọc Sơn",
     text: "Cảm ơn bạn. Bộ phận tiếp nhận sẽ kiểm tra thông tin, thực hiện conflict check và liên hệ gửi báo phí/hợp đồng trong thời gian sớm nhất.",
   });
 

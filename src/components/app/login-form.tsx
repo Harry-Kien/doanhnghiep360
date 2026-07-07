@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import * as React from "react";
 import Link from "next/link";
@@ -140,7 +140,7 @@ export function LoginForm({
     return (
       <div className="w-full max-w-md rounded-lg border border-border bg-card p-6 shadow-sm">
         <h1 className="text-2xl font-semibold tracking-tight">Đăng nhập nội bộ</h1>
-        <p className="mt-2 text-sm text-muted-foreground">Khu vực dành cho nhân viên Ngọc Sơn &amp; Partners.</p>
+        <p className="mt-2 text-sm text-muted-foreground">Khu vực dành cho nhân viên Luật Ngọc Sơn.</p>
 
         <form onSubmit={submit} className="mt-6 space-y-4" noValidate>
           <div>

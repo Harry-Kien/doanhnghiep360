@@ -1,4 +1,4 @@
-import Link from "next/link";
+﻿import Link from "next/link";
 import {
   Bell,
   ChevronRight,
@@ -100,7 +100,7 @@ export function AppShell({
           <span className="min-w-0 leading-tight">
             <span className="block truncate text-sm font-bold tracking-tight">Legal360</span>
             <span className={cn("block truncate text-[11px]", isLightSurface ? "text-slate-500" : "text-muted-foreground")}>
-              Ngọc Sơn &amp; Partners
+              Luật Ngọc Sơn
             </span>
           </span>
         </Link>

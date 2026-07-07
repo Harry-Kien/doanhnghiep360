@@ -1,4 +1,4 @@
-import Link from "next/link";
+﻿import Link from "next/link";
 import Image from "next/image";
 import { Phone, Globe } from "lucide-react";
 import { buttonVariants } from "@/components/ui/button";
@@ -18,7 +18,7 @@ export function SiteHeader() {
       {/* Top contact bar */}
       <div className="hidden bg-[#0B1B33] text-white md:block">
         <div className="container flex h-9 items-center justify-between text-xs">
-          <span className="font-medium">CÔNG TY LUẬT TNHH NGỌC SƠN &amp; PARTNERS — CN Dĩ An</span>
+          <span className="font-medium">LUẬT NGỌC SƠN — CN Dĩ An</span>
           <div className="flex items-center gap-5">
             <a href="tel:0972290595" className="flex items-center gap-1.5 transition-opacity hover:opacity-80">
               <Phone className="size-3.5 text-gold" /> 097 2290 595
@@ -33,9 +33,9 @@ export function SiteHeader() {
       <header className="border-b border-border/80 bg-background/90 backdrop-blur">
         <div className="container flex h-16 items-center justify-between gap-4">
           <Link href="/" className="flex items-center gap-2.5">
-            <Image src="/brand/emblem-360.webp" alt="Ngọc Sơn & Partners" width={40} height={40} className="size-10 rounded-full object-cover ring-1 ring-border" />
+            <Image src="/brand/emblem-360.webp" alt="Luật Ngọc Sơn" width={40} height={40} className="size-10 rounded-full object-cover ring-1 ring-border" />
             <span className="flex flex-col leading-none">
-              <span className="font-display text-[16px] font-semibold tracking-tight text-[#0B1B33]">Ngọc Sơn &amp; Partners</span>
+              <span className="font-display text-[16px] font-semibold tracking-tight text-[#0B1B33]">Luật Ngọc Sơn</span>
               <span className="text-[11px] text-muted-foreground">Khảo sát Pháp lý Doanh nghiệp 360°</span>
             </span>
           </Link>

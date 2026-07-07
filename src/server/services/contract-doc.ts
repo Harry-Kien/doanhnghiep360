@@ -1,4 +1,4 @@
-// Sinh HỢP ĐỒNG DỊCH VỤ PHÁP LÝ (DOCX) để khách tải về, ký số, rồi tải lên lại.
+﻿// Sinh HỢP ĐỒNG DỊCH VỤ PHÁP LÝ (DOCX) để khách tải về, ký số, rồi tải lên lại.
 import { getDb } from "@/server/db";
 import { PACKAGE_META, VND } from "@/shared/constants";
 import type { Case, Contract, Organization, Proposal } from "@/shared/types";
@@ -53,7 +53,7 @@ export async function generateContractDocx(model: ContractModel): Promise<Buffer
     P(`Hôm nay, ngày ${date.getDate()} tháng ${date.getMonth() + 1} năm ${date.getFullYear()}, chúng tôi gồm:`),
 
     H("BÊN A — BÊN CUNG CẤP DỊCH VỤ"),
-    P("CÔNG TY LUẬT TNHH NGỌC SƠN & PARTNERS", { bold: true }),
+    P("LUẬT NGỌC SƠN", { bold: true }),
     P("Đại diện: Luật sư điều hành · Website: luatngocson.com"),
 
     H("BÊN B — KHÁCH HÀNG"),

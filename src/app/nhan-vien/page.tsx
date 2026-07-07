@@ -1,7 +1,7 @@
-import { LoginForm } from "@/components/app/login-form";
+﻿import { LoginForm } from "@/components/app/login-form";
 import { AuthScreen } from "@/components/app/auth-screen";
 
-export const metadata = { title: "Đăng nhập nội bộ — Ngọc Sơn & Partners" };
+export const metadata = { title: "Đăng nhập nội bộ — Luật Ngọc Sơn" };
 
 // Trang đăng nhập riêng cho NHÂN VIÊN (không link công khai từ landing/khách hàng).
 export default function StaffLoginPage({ searchParams }: { searchParams: { next?: string } }) {

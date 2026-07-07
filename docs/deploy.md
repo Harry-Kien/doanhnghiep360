@@ -1,4 +1,4 @@
-# Legal360 - Deploy go-live
+﻿# Legal360 - Deploy go-live
 
 Cap nhat: 2026-07-01.
 
@@ -34,7 +34,7 @@ Bat buoc:
 
 | Bien | Gia tri |
 |---|---|
-| `NEXT_PUBLIC_APP_NAME` | `Legal360 - Ngoc Son & Partners` |
+| `NEXT_PUBLIC_APP_NAME` | `Legal360 - Luat Ngoc Son` |
 | `APP_BASE_URL` | `https://<domain-that>` |
 | `AUTH_SECRET` | chuoi ngau nhien 32+ ky tu |
 | `ADMIN_EMAIL` | email admin master |
@@ -62,7 +62,7 @@ Tuy chon:
 
 Khong dat `SEED_DEMO=true` khi go-live. Bien nay chi dung neu can trinh dien tren moi truong rieng.
 
-Tai khoan nhan su thuc te phai duoc tao/quan tri trong `/admin/users`. Local seed co san doi ngu Ngoc Son & Partners de test role admin, reviewer, lawyer, staff, intake va accountant; production seed khong tao ho so mau.
+Tai khoan nhan su thuc te phai duoc tao/quan tri trong `/admin/users`. Local seed co san doi ngu Luat Ngoc Son de test role admin, reviewer, lawyer, staff, intake va accountant; production seed khong tao ho so mau.
 
 ## 4. Kiem tra env truoc deploy
 

@@ -1,4 +1,4 @@
-import Link from "next/link";
+﻿import Link from "next/link";
 import { Scale } from "lucide-react";
 import { AccountMenu } from "@/components/app/account-menu";
 import { requireAuth } from "@/lib/guard";
@@ -16,7 +16,7 @@ export default function PortalLayout({ children }: { children: React.ReactNode }
               <Scale className="size-5" />
             </span>
             <span className="flex flex-col leading-none">
-              <span className="font-display text-[16px] font-semibold tracking-tight text-[#0B1B33]">Ngọc Sơn &amp; Partners</span>
+              <span className="font-display text-[16px] font-semibold tracking-tight text-[#0B1B33]">Luật Ngọc Sơn</span>
               <span className="text-[11px] text-muted-foreground">Cổng khách hàng</span>
             </span>
           </Link>

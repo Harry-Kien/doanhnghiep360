@@ -1,4 +1,4 @@
-import Link from "next/link";
+﻿import Link from "next/link";
 import { Scale, Check, ShieldCheck, FileCheck2, Hash, ArrowLeft } from "lucide-react";
 import { IntakeForm } from "@/components/intake/intake-form";
 
@@ -29,7 +29,7 @@ export default function RegisterPage() {
             <span className="flex size-10 items-center justify-center rounded-xl bg-white/15 backdrop-blur">
               <Scale className="size-5" />
             </span>
-            <span className="text-lg font-semibold tracking-tight">Ngọc Sơn &amp; Partners</span>
+            <span className="text-lg font-semibold tracking-tight">Luật Ngọc Sơn</span>
           </Link>
           <h2 className="mt-12 font-display text-3xl font-semibold leading-tight tracking-tight">
             Khảo sát Pháp lý<br />Doanh nghiệp <span className="italic text-gold">360°</span>
@@ -65,7 +65,7 @@ export default function RegisterPage() {
             <span className="flex size-8 items-center justify-center rounded-lg bg-primary text-primary-foreground">
               <Scale className="size-4" />
             </span>
-            <span className="text-base font-semibold tracking-tight">Ngọc Sơn &amp; Partners</span>
+            <span className="text-base font-semibold tracking-tight">Luật Ngọc Sơn</span>
           </Link>
           <Link href="/" className="ml-auto inline-flex items-center gap-1.5 text-sm text-muted-foreground transition-colors hover:text-foreground">
             <ArrowLeft className="size-4" /> Về trang chủ

@@ -1,4 +1,4 @@
-import type { Metadata, Viewport } from "next";
+﻿import type { Metadata, Viewport } from "next";
 import { Be_Vietnam_Pro, Lora } from "next/font/google";
 import "./globals.css";
 
@@ -18,7 +18,7 @@ const display = Lora({
 });
 
 export const metadata: Metadata = {
-  title: "Ngọc Sơn & Partners — Khảo sát Pháp lý Doanh nghiệp 360°",
+  title: "Luật Ngọc Sơn — Khảo sát Pháp lý Doanh nghiệp 360°",
   description:
     "Chẩn đoán sức khỏe pháp lý doanh nghiệp trên 8 lĩnh vực: rà soát có hệ thống, luật sư phê duyệt từng kết luận, kết quả là báo cáo và lộ trình xử lý 30-90 ngày.",
 };

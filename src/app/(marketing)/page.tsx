@@ -1,23 +1,17 @@
-import Link from "next/link";
+﻿import Link from "next/link";
 import Image from "next/image";
-import { ArrowRight, Check, ShieldCheck, Quote } from "lucide-react";
+import { ArrowRight, Check, Quote } from "lucide-react";
 import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { PACKAGE_META, SERVICE_PACKAGES, SURVEY_SCOPE, VND } from "@/shared/constants";
 
 // ───────────────────────── Dữ liệu nội dung ─────────────────────────
-const HEALTH = [
-  { key: "01", label: "Pháp lý doanh nghiệp", level: "Trung bình", tone: "med" },
-  { key: "02", label: "Lao động / BHXH", level: "Cao", tone: "high" },
-  { key: "03", label: "Thuế / kế toán", level: "Thấp", tone: "low" },
-  { key: "04", label: "Hợp đồng thương mại", level: "Cao", tone: "high" },
-  { key: "05", label: "Đầu tư / M&A", level: "Thấp", tone: "low" },
-  { key: "06", label: "SHTT / tài sản số", level: "Trung bình", tone: "med" },
-  { key: "07", label: "Tranh chấp / tố tụng", level: "Thấp", tone: "low" },
-  { key: "08", label: "Hệ thống quản lý", level: "Trung bình", tone: "med" },
-] as const;
-
-const DOT: Record<string, string> = { high: "bg-red-500", med: "bg-gold", low: "bg-emerald-500" };
+const HERO_FLOW = [
+  { t: "Đăng ký khảo sát", d: "Doanh nghiệp để lại thông tin cơ bản và mục tiêu cần rà soát." },
+  { t: "Legal360 tiếp nhận", d: "Bộ phận phụ trách kiểm tra nhu cầu, phạm vi và xung đột lợi ích." },
+  { t: "Gửi checklist tài liệu", d: "Khách hàng nhận danh mục giấy tờ cần chuẩn bị theo từng nhóm pháp lý." },
+  { t: "Luật sư rà soát", d: "Sau khi đủ dữ liệu, luật sư mới lập báo cáo và lộ trình xử lý." },
+];
 
 const STEPS = [
   { t: "Đăng ký & xác thực", d: "Gửi phiếu yêu cầu khảo sát, xác thực email — mở hồ sơ ban đầu." },
@@ -74,7 +68,7 @@ export default function LandingPage() {
           <div className="lg:col-span-7">
             <p className="flex items-center gap-3 text-xs font-medium uppercase tracking-[0.18em] text-gold">
               <span className="h-px w-8 bg-gold/60" />
-              Công ty Luật TNHH Ngọc Sơn &amp; Partners
+              Luật Ngọc Sơn
             </p>
             <h1 className="mt-6 font-display text-[2.6rem] font-semibold leading-[1.08] tracking-tight md:text-6xl">
               Chẩn đoán <span className="italic text-gold">sức khỏe pháp lý</span><br className="hidden md:block" /> cho doanh nghiệp của bạn
@@ -98,33 +92,34 @@ export default function LandingPage() {
             </ul>
           </div>
 
-          {/* Phiếu chẩn đoán pháp lý — specimen sản phẩm */}
+          {/* Điểm bắt đầu của khách hàng mới */}
           <div className="lg:col-span-5">
             <div className="relative rounded-2xl border border-white/10 bg-white p-6 text-[#0B1B33] shadow-2xl">
-              <div className="flex items-start justify-between border-b border-slate-200 pb-4">
-                <div>
-                  <p className="text-[11px] uppercase tracking-wider text-slate-400">Phiếu chẩn đoán pháp lý</p>
-                  <p className="mt-0.5 font-mono text-sm font-semibold">DN-20260618-00001</p>
-                </div>
-                <div className="text-right">
-                  <p className="font-display text-3xl font-semibold leading-none">72<span className="text-base text-slate-400">/100</span></p>
-                  <p className="text-[11px] text-slate-400">điểm sức khỏe</p>
-                </div>
+              <div className="border-b border-slate-200 pb-5">
+                <p className="text-[11px] uppercase tracking-wider text-slate-400">Bắt đầu khảo sát</p>
+                <h2 className="mt-2 font-display text-2xl font-semibold leading-tight">
+                  Tạo yêu cầu trước, có hồ sơ sau
+                </h2>
+                <p className="mt-2 text-sm leading-6 text-slate-500">
+                  Khách hàng lần đầu chỉ cần đăng ký nhu cầu. Mã hồ sơ, checklist và báo cáo chỉ xuất hiện sau khi Legal360 tiếp nhận và mở quy trình.
+                </p>
               </div>
-              <ul className="mt-4 space-y-2.5">
-                {HEALTH.map((h) => (
-                  <li key={h.key} className="flex items-center gap-3 text-sm">
-                    <span className="font-mono text-[11px] text-slate-300">{h.key}</span>
-                    <span className={cn("size-2 shrink-0 rounded-full", DOT[h.tone])} />
-                    <span className="flex-1 truncate text-slate-700">{h.label}</span>
-                    <span className={cn("text-xs font-medium", h.tone === "high" ? "text-red-600" : h.tone === "med" ? "text-amber-600" : "text-emerald-600")}>{h.level}</span>
+              <ol className="mt-5 space-y-4">
+                {HERO_FLOW.map((item, index) => (
+                  <li key={item.t} className="flex gap-3">
+                    <span className="flex size-8 shrink-0 items-center justify-center rounded-lg bg-slate-100 font-mono text-xs font-semibold text-gold">
+                      {String(index + 1).padStart(2, "0")}
+                    </span>
+                    <span>
+                      <span className="block text-sm font-semibold text-slate-900">{item.t}</span>
+                      <span className="mt-0.5 block text-sm leading-6 text-slate-500">{item.d}</span>
+                    </span>
                   </li>
                 ))}
-              </ul>
-              <div className="mt-4 flex items-center gap-2 rounded-lg bg-slate-50 px-3 py-2.5 text-xs text-slate-500">
-                <ShieldCheck className="size-4 text-[#1E5BD6]" />
-                Còn 4 phát hiện chờ luật sư phê duyệt trước khi xuất báo cáo final.
-              </div>
+              </ol>
+              <Link href="/dang-ky" className={cn(buttonVariants({ size: "lg" }), "mt-6 w-full bg-gold text-gold-foreground hover:bg-gold/90")}>
+                Bắt đầu đăng ký khảo sát <ArrowRight className="size-4" />
+              </Link>
             </div>
           </div>
         </div>
@@ -202,14 +197,17 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* ───────── ƯU ĐÃI TRỌN GÓI ───────── */}
+      {/* ───────── GÓI PRO NỔI BẬT ───────── */}
       <section id="uu-dai" className="bg-[#0B1B33] text-white">
         <div className="container grid items-center gap-12 py-20 md:grid-cols-2 md:py-24">
           <div>
-            <Eyebrow light>Ưu đãi trọn gói</Eyebrow>
+            <Eyebrow light>Gói nổi bật</Eyebrow>
             <h2 className="mt-3 font-display text-3xl font-semibold tracking-tight md:text-4xl">
-              Chỉ <span className="text-gold">10.000.000đ</span>, doanh nghiệp đã sở hữu dịch vụ
+              Gói Pro <span className="text-gold">12.000.000đ</span> cho doanh nghiệp cần rà soát mở rộng
             </h2>
+            <p className="mt-4 max-w-xl text-white/70">
+              Phù hợp với doanh nghiệp muốn rà soát phần pháp lý nền tảng, lao động, thuế và hợp đồng thương mại trong cùng một hồ sơ.
+            </p>
             <ul className="mt-7 space-y-3">
               {["Khảo sát pháp luật doanh nghiệp", "Khảo sát pháp luật lao động", "Khảo sát pháp luật thương mại"].map((t) => (
                 <li key={t} className="flex items-center gap-3 text-[15px]"><Check className="size-5 shrink-0 text-gold" /> {t}</li>
@@ -224,12 +222,22 @@ export default function LandingPage() {
               </ul>
             </div>
             <Link href="/dang-ky" className={cn(buttonVariants({ size: "lg" }), "mt-8 bg-gold text-gold-foreground hover:bg-gold/90")}>
-              Đăng ký nhận ưu đãi <ArrowRight className="size-4" />
+              Đăng ký gói Pro <ArrowRight className="size-4" />
             </Link>
           </div>
-          <div className="relative">
-            <Image src="/brand/offer-services.webp" alt="Ưu đãi trọn gói Khảo sát Pháp lý Doanh nghiệp 360°" width={620} height={620}
-              className="mx-auto w-full max-w-[440px] rounded-2xl shadow-2xl ring-1 ring-white/10" />
+          <div className="rounded-2xl border border-white/15 bg-white/[0.06] p-7 shadow-2xl">
+            <p className="text-xs font-semibold uppercase tracking-[0.18em] text-gold">Pro bao gồm</p>
+            <div className="mt-5 grid gap-4">
+              {["Toàn bộ gói Basic", "Thuế / kế toán, BHXH", "Hợp đồng thương mại", "Checklist xử lý rủi ro"].map((item, index) => (
+                <div key={item} className="flex items-start gap-4 rounded-xl border border-white/10 bg-white/[0.04] p-4">
+                  <span className="font-mono text-sm text-gold">{String(index + 1).padStart(2, "0")}</span>
+                  <span className="text-sm text-white/85">{item}</span>
+                </div>
+              ))}
+            </div>
+            <p className="mt-5 text-sm leading-6 text-white/60">
+              Bảng giá bên dưới là mức đăng ký chính thức. Ưu đãi phát sinh sẽ được xác nhận riêng trong báo giá hoặc hợp đồng dịch vụ.
+            </p>
           </div>
         </div>
       </section>
@@ -297,21 +305,21 @@ export default function LandingPage() {
               Đội ngũ luật sư đứng sau mỗi báo cáo
             </h2>
             <p className="mt-4 text-muted-foreground">
-              Dịch vụ Khảo sát Doanh nghiệp 360° được thực hiện và phê duyệt bởi đội ngũ luật sư của Ngọc Sơn &amp; Partners —
+              Dịch vụ Khảo sát Doanh nghiệp 360° được thực hiện và phê duyệt bởi đội ngũ luật sư của Luật Ngọc Sơn —
               mỗi kết luận pháp lý đều có người chịu trách nhiệm.
             </p>
           </div>
           <figure className="mx-auto mt-12 max-w-4xl overflow-hidden rounded-2xl border border-border bg-[#eaf2fb] shadow-sm ring-1 ring-black/5">
             <Image
               src="/brand/team-360.webp"
-              alt="Đội ngũ luật sư Ngọc Sơn & Partners — Khảo sát Pháp lý Doanh nghiệp 360°"
+              alt="Đội ngũ luật sư Luật Ngọc Sơn — Khảo sát Pháp lý Doanh nghiệp 360°"
               width={1600}
               height={931}
               className="h-auto w-full"
             />
           </figure>
           <p className="mt-4 text-center text-sm text-muted-foreground">
-            Đội ngũ Luật sư — Công ty Luật TNHH Ngọc Sơn &amp; Partners
+            Đội ngũ Luật sư — Luật Ngọc Sơn
           </p>
         </div>
       </section>
@@ -344,7 +352,7 @@ export default function LandingPage() {
             Bắt đầu chẩn đoán sức khỏe pháp lý doanh nghiệp
           </h2>
           <p className="max-w-xl text-white/70">
-            Đăng ký trong vài phút. Đội ngũ luật sư Ngọc Sơn &amp; Partners đồng hành từ tiếp nhận đến báo cáo và lộ trình xử lý.
+            Đăng ký trong vài phút. Đội ngũ luật sư Luật Ngọc Sơn đồng hành từ tiếp nhận đến báo cáo và lộ trình xử lý.
           </p>
           <Link href="/dang-ky" className={cn(buttonVariants({ size: "lg" }), "bg-gold text-gold-foreground hover:bg-gold/90")}>
             Đăng ký khảo sát ngay <ArrowRight className="size-4" />

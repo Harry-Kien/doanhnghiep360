@@ -1,4 +1,4 @@
-// Hằng số nghiệp vụ dùng chung.
+﻿// Hằng số nghiệp vụ dùng chung.
 
 /** 12 nhóm folder Google Drive theo blueprint (mục 5). */
 export const DRIVE_SUBFOLDERS = [
@@ -148,7 +148,7 @@ export const VND = new Intl.NumberFormat("vi-VN", { style: "currency", currency:
  */
 export const PAYMENT_INSTRUCTIONS = {
   bankName: "Vietcombank — CN TP.HCM",
-  accountName: "CÔNG TY LUẬT TNHH NGỌC SƠN & PARTNERS",
+  accountName: "LUẬT NGỌC SƠN",
   accountNumber: "9382140336",
   noteHint: "Ghi nội dung chuyển khoản: [Mã hồ sơ] [Tên doanh nghiệp]",
 } as const;

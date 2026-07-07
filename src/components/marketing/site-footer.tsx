@@ -1,4 +1,4 @@
-import Link from "next/link";
+﻿import Link from "next/link";
 import Image from "next/image";
 import { Phone, Globe, MapPin } from "lucide-react";
 
@@ -8,9 +8,9 @@ export function SiteFooter() {
       <div className="container grid gap-8 py-12 md:grid-cols-4">
         <div className="md:col-span-2">
           <div className="flex items-center gap-2.5">
-            <Image src="/brand/emblem-360.webp" alt="Ngọc Sơn & Partners" width={40} height={40} className="size-10 rounded-full object-cover ring-1 ring-border" />
+            <Image src="/brand/emblem-360.webp" alt="Luật Ngọc Sơn" width={40} height={40} className="size-10 rounded-full object-cover ring-1 ring-border" />
             <div className="leading-tight">
-              <p className="font-display text-base font-semibold text-[#0B1B33]">Công ty Luật TNHH Ngọc Sơn &amp; Partners</p>
+              <p className="font-display text-base font-semibold text-[#0B1B33]">Luật Ngọc Sơn</p>
               <p className="text-xs text-muted-foreground">Chi nhánh Dĩ An · Khảo sát Pháp lý Doanh nghiệp 360°</p>
             </div>
           </div>
@@ -29,7 +29,7 @@ export function SiteFooter() {
           <ul className="mt-3 space-y-2 text-sm text-muted-foreground">
             <li><a href="#quy-trinh" className="hover:text-foreground">Quy trình</a></li>
             <li><a href="#pham-vi" className="hover:text-foreground">Phạm vi khảo sát</a></li>
-            <li><a href="#uu-dai" className="hover:text-foreground">Ưu đãi trọn gói</a></li>
+            <li><a href="#uu-dai" className="hover:text-foreground">Gói Pro nổi bật</a></li>
             <li><Link href="/dang-ky" className="hover:text-foreground">Đăng ký khảo sát</Link></li>
           </ul>
         </div>
@@ -45,7 +45,7 @@ export function SiteFooter() {
       </div>
       <div className="border-t border-border/70">
         <div className="container flex flex-col items-center justify-between gap-2 py-5 text-xs text-muted-foreground md:flex-row">
-          <p>© 2026 Công ty Luật TNHH Ngọc Sơn &amp; Partners. Bảo lưu mọi quyền.</p>
+          <p>© 2026 Luật Ngọc Sơn. Bảo lưu mọi quyền.</p>
           <p>Công nghệ hỗ trợ rà soát — mọi kết luận pháp lý do luật sư phê duyệt cuối.</p>
         </div>
       </div>

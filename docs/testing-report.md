@@ -1,4 +1,4 @@
-# LEGAL360 — Testing Report
+﻿# LEGAL360 — Testing Report
 
 Cập nhật: 19/06/2026
 
@@ -30,7 +30,7 @@ Cập nhật: 19/06/2026
 
 ## E2E browser (Playwright, 5 tests)
 
-1. Landing đúng thương hiệu Ngọc Sơn & Partners + hotline.
+1. Landing đúng thương hiệu Luật Ngọc Sơn + hotline.
 2. Mở phiếu đăng ký khảo sát.
 3. Chưa đăng nhập vào /admin → redirect /login.
 4. Đăng nhập Intake → vào workspace.

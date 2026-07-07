@@ -1,4 +1,4 @@
-import Link from "next/link";
+﻿import Link from "next/link";
 import { ArrowLeft, FileCheck2, Hash, Scale, ShieldCheck } from "lucide-react";
 
 const POINTS = [
@@ -18,7 +18,7 @@ export function AuthScreen({ children }: { children: React.ReactNode }) {
             </span>
             <span className="min-w-0">
               <span className="block text-sm font-bold tracking-tight">Legal360</span>
-              <span className="block text-xs text-muted-foreground">Ngọc Sơn &amp; Partners</span>
+              <span className="block text-xs text-muted-foreground">Luật Ngọc Sơn</span>
             </span>
           </Link>
 
@@ -43,7 +43,7 @@ export function AuthScreen({ children }: { children: React.ReactNode }) {
             ))}
           </ul>
         </div>
-        <p className="text-xs text-muted-foreground">© 2026 Công ty Luật TNHH Ngọc Sơn &amp; Partners</p>
+        <p className="text-xs text-muted-foreground">© 2026 Luật Ngọc Sơn</p>
       </aside>
 
       <div className="flex flex-col">

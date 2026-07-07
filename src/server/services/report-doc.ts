@@ -1,4 +1,4 @@
-// Sinh báo cáo khảo sát pháp lý THẬT (DOCX + HTML in PDF) từ dữ liệu hồ sơ đã review.
+﻿// Sinh báo cáo khảo sát pháp lý THẬT (DOCX + HTML in PDF) từ dữ liệu hồ sơ đã review.
 // Nguồn: organization + case + finding đã được luật sư duyệt (có evidence) + risk scores + roadmap.
 import { getDb } from "@/server/db";
 import { isFindingFinalReady } from "@/server/services/report";
@@ -69,7 +69,7 @@ export async function generateReportDocx(model: ReportModel): Promise<Buffer> {
 
   // Tiêu đề
   children.push(
-    new Paragraph({ alignment: AlignmentType.CENTER, children: [new TextRun({ text: "CÔNG TY LUẬT TNHH NGỌC SƠN & PARTNERS", bold: true, color: NAVY, size: 26 })] }),
+    new Paragraph({ alignment: AlignmentType.CENTER, children: [new TextRun({ text: "LUẬT NGỌC SƠN", bold: true, color: NAVY, size: 26 })] }),
     new Paragraph({ alignment: AlignmentType.CENTER, children: [new TextRun({ text: "BÁO CÁO KHẢO SÁT PHÁP LÝ DOANH NGHIỆP 360°", bold: true, color: GOLD, size: 30 })] }),
     new Paragraph({ alignment: AlignmentType.CENTER, spacing: { after: 200 }, children: [new TextRun({ text: `Mã hồ sơ: ${model.caseCode}`, italics: true, size: 20 })] }),
   );
@@ -154,7 +154,7 @@ export async function generateReportDocx(model: ReportModel): Promise<Buffer> {
       border: { top: { style: BorderStyle.SINGLE, size: 6, color: "CCCCCC", space: 8 } },
       children: [
         new TextRun({
-          text: "Báo cáo được lập bởi Công ty Luật TNHH Ngọc Sơn & Partners trên cơ sở tài liệu do doanh nghiệp cung cấp và đã được luật sư phụ trách thẩm định. Báo cáo phục vụ mục đích khảo sát pháp lý nội bộ.",
+          text: "Báo cáo được lập bởi Luật Ngọc Sơn trên cơ sở tài liệu do doanh nghiệp cung cấp và đã được luật sư phụ trách thẩm định. Báo cáo phục vụ mục đích khảo sát pháp lý nội bộ.",
           italics: true,
           size: 16,
           color: "777777",
@@ -223,7 +223,7 @@ export function renderReportHtml(model: ReportModel): string {
   @media print{.print-hint{display:none}}
 </style></head><body>
   <p class="print-hint"><button onclick="window.print()">In / Lưu PDF</button></p>
-  <p class="firm">CÔNG TY LUẬT TNHH NGỌC SƠN &amp; PARTNERS</p>
+  <p class="firm">LUẬT NGỌC SƠN</p>
   <h1>BÁO CÁO KHẢO SÁT PHÁP LÝ DOANH NGHIỆP 360°</h1>
   <p class="code">Mã hồ sơ: ${esc(model.caseCode)} · Lập ngày ${fmtDate(model.generatedAt)}</p>
 
@@ -245,6 +245,6 @@ export function renderReportHtml(model: ReportModel): string {
 
   ${roadmapHtml ? `<h2>4. Lộ trình xử lý 30-90 ngày</h2>${roadmapHtml}` : ""}
 
-  <p class="disclaimer">Báo cáo được lập bởi Công ty Luật TNHH Ngọc Sơn &amp; Partners trên cơ sở tài liệu do doanh nghiệp cung cấp và đã được luật sư phụ trách thẩm định. Phục vụ mục đích khảo sát pháp lý nội bộ.</p>
+  <p class="disclaimer">Báo cáo được lập bởi Luật Ngọc Sơn trên cơ sở tài liệu do doanh nghiệp cung cấp và đã được luật sư phụ trách thẩm định. Phục vụ mục đích khảo sát pháp lý nội bộ.</p>
 </body></html>`;
 }

@@ -1,4 +1,4 @@
-// AI legal analysis adapter — interface + mock + Claude (llm) + Gemini (free tier).
+﻿// AI legal analysis adapter — interface + mock + Claude (llm) + Gemini (free tier).
 // AI chỉ tạo bản nháp (ai_draft), BẮT BUỘC evidence; KHÔNG kết luận cuối — luật sư duyệt.
 // Cấu hình lấy từ settings (DB override env) để cài key qua Admin.
 import { effectiveAiConfig, isAiConfigured } from "@/server/services/settings";
@@ -54,7 +54,7 @@ function evidenceChecker(findings: AiFindingDraft[]): AiCheckerResult {
   };
 }
 
-const SYSTEM_PROMPT = `Bạn là trợ lý pháp lý của Công ty Luật TNHH Ngọc Sơn & Partners, hỗ trợ dịch vụ "Khảo sát Pháp lý Doanh nghiệp 360°".
+const SYSTEM_PROMPT = `Bạn là trợ lý pháp lý của Luật Ngọc Sơn, hỗ trợ dịch vụ "Khảo sát Pháp lý Doanh nghiệp 360°".
 Nhiệm vụ: đọc nội dung tài liệu doanh nghiệp cung cấp và phát hiện RỦI RO PHÁP LÝ dưới dạng BẢN NHÁP để luật sư duyệt.
 
 Nguyên tắc bắt buộc:
