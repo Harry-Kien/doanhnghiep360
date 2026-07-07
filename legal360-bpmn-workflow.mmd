@@ -1,0 +1,79 @@
+﻿flowchart LR
+    subgraph CUST[Khách hàng]
+        A((Start)) --> A1[Truy cập Landing Page]
+        A1 --> A2[Điền phiếu yêu cầu khảo sát]
+        A2 --> A3[Xác thực Email/SĐT/OTP]
+        A3 --> A4[Ký hợp đồng và thanh toán]
+        A4 --> A5[Upload tài liệu]
+        A5 --> A6[Tham gia khảo sát online/offline]
+        A6 --> A7[Nhận báo cáo và roadmap]
+        A7 --> AZ((End))
+    end
+
+    subgraph INTAKE[Intake / Sales / Legal Ops]
+        B1[Nhận lead] --> B2[Kiểm tra thông tin]
+        B2 --> B3[Conflict check]
+        B3 --> B4{Có xung đột lợi ích?}
+        B4 -- Có --> B5[Từ chối hoặc Partner duyệt ngoại lệ]
+        B4 -- Không --> B6[Gửi báo phí và hợp đồng]
+        B6 --> B7[Theo dõi ký và thanh toán]
+        B7 --> B8[Phân công luật sư/chuyên viên]
+    end
+
+    subgraph SYS[CRM / Database / Workflow]
+        C1[Tạo lead] --> C2[Tạo organization/contact]
+        C2 --> C3[Sinh mã hồ sơ DN-YYYYMMDD-00001]
+        C3 --> C4[Tạo case]
+        C4 --> C5[Ghi status history]
+        C5 --> C6[Tạo task và checklist tài liệu]
+        C6 --> C7[Ghi audit log]
+    end
+
+    subgraph DRIVE[Google Drive / Document Store]
+        D1[Tạo folder DN-code_company]
+        D1 --> D2[Tạo subfolder chuẩn]
+        D2 --> D3[Lưu tài liệu upload]
+        D3 --> D4[Đổi tên file theo mã hồ sơ]
+        D4 --> D5[Lưu metadata file_id/folder_id]
+    end
+
+    subgraph AI[AI Processing]
+        E1[OCR PDF/Word/Image] --> E2[Extract text và fields]
+        E2 --> E3[Phân loại tài liệu]
+        E3 --> E4[AI Legal Analysis Draft]
+        E4 --> E5[AI Checker phản biện]
+        E5 --> E6[Tính confidence score]
+        E6 --> E7{Đủ tin cậy?}
+        E7 -- Không --> E8[Yêu cầu kiểm tra thủ công/bổ sung]
+        E7 -- Có --> E9[Chuyển Lawyer Review]
+    end
+
+    subgraph LAWYER[Luật sư / Reviewer]
+        F1[Xem tài liệu gốc và AI draft]
+        F1 --> F2[Accept/Edit/Reject finding]
+        F2 --> F3{Cần bổ sung tài liệu?}
+        F3 -- Có --> F4[Gửi yêu cầu bổ sung]
+        F3 -- Không --> F5[Duyệt báo cáo]
+        F5 --> F6[Khóa bản final]
+    end
+
+    subgraph REPORT[Báo cáo / CSKH]
+        G1[Sinh DOCX/PDF]
+        G1 --> G2[Cập nhật dashboard]
+        G2 --> G3[Tạo checklist]
+        G3 --> G4[Tạo roadmap 30-90 ngày]
+        G4 --> G5[Gửi khách hàng]
+        G5 --> G6[Đề xuất hợp đồng tư vấn thường xuyên]
+    end
+
+    A2 --> B1
+    A3 --> C1
+    B7 --> C3
+    C4 --> D1
+    A5 --> D3
+    D5 --> E1
+    E8 --> F1
+    E9 --> F1
+    F4 --> A5
+    F6 --> G1
+    G5 --> A7

@@ -1,0 +1,535 @@
+// Legal360 — Canonical data model (source of truth for the DB).
+// MVP runtime uses a repository abstraction that mirrors these models
+// (src/server/repositories). Swap-in: `prisma migrate` + a PrismaRepository.
+//
+//   npm i -D prisma && npm i @prisma/client
+//   npx prisma migrate dev --name init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ───────────────────────── Enums ─────────────────────────
+enum Role {
+  admin
+  intake
+  lawyer
+  reviewer
+  staff
+  customer
+  accountant
+}
+
+enum CaseStatus {
+  lead_new
+  lead_verified
+  conflict_checking
+  conflict_cleared
+  proposal_sent
+  contract_pending
+  payment_pending
+  case_opened
+  waiting_documents
+  documents_received
+  document_reviewing
+  need_more_documents
+  ocr_processing
+  ai_classifying
+  ai_analyzing
+  lawyer_reviewing
+  report_drafting
+  report_revision
+  approved
+  delivered
+  roadmap_followup
+  retainer_proposed
+  completed
+  cancelled
+}
+
+enum ServicePackage {
+  basic
+  pro
+  premium
+  enterprise
+}
+
+enum ConflictResult {
+  clear
+  potential_conflict
+  rejected
+}
+
+enum RiskLevel {
+  low
+  medium
+  high
+  critical
+}
+
+enum FindingStatus {
+  ai_draft
+  checker_flagged
+  lawyer_accepted
+  lawyer_edited
+  rejected
+}
+
+enum AiRunType {
+  ocr
+  extract
+  classify
+  analyze
+  check
+}
+
+enum AiRunStatus {
+  queued
+  running
+  done
+  error
+}
+
+enum DriveFolderStatus {
+  active
+  drive_pending
+  error
+}
+
+enum ReportKind {
+  ai_draft
+  lawyer_draft
+  final
+}
+
+// ───────────────────────── Identity ─────────────────────────
+model User {
+  id           String   @id @default(cuid())
+  email        String   @unique
+  phone        String?
+  fullName     String
+  role         Role
+  passwordHash String?
+  isActive     Boolean  @default(true)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  casesAsLawyer   Case[] @relation("CaseLawyer")
+  casesAsReviewer Case[] @relation("CaseReviewer")
+  casesAsIntake   Case[] @relation("CaseIntake")
+}
+
+model Organization {
+  id           String    @id @default(cuid())
+  name         String
+  slug         String    @unique
+  taxCode      String?
+  address      String?
+  businessType String?
+  industry     String?
+  headcount    Int?
+  market       String?
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+
+  contacts Contact[]
+  cases    Case[]
+}
+
+model Contact {
+  id        String   @id @default(cuid())
+  orgId     String
+  fullName  String
+  position  String?
+  email     String
+  phone     String
+  isPrimary Boolean  @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  organization Organization @relation(fields: [orgId], references: [id])
+  cases        Case[]
+}
+
+// ───────────────────────── Case & workflow ─────────────────────────
+model Case {
+  id               String     @id @default(cuid())
+  caseCode         String?    @unique
+  orgId            String
+  primaryContactId String?
+  status           CaseStatus @default(lead_new)
+  package          ServicePackage?
+  assignedLawyerId String?
+  reviewerId       String?
+  intakeOwnerId    String?
+  openedAt         DateTime?
+  slaDueAt         DateTime?
+  createdAt        DateTime   @default(now())
+  updatedAt        DateTime   @updatedAt
+
+  organization   Organization @relation(fields: [orgId], references: [id])
+  primaryContact Contact?     @relation(fields: [primaryContactId], references: [id])
+  assignedLawyer User?        @relation("CaseLawyer", fields: [assignedLawyerId], references: [id])
+  reviewer       User?        @relation("CaseReviewer", fields: [reviewerId], references: [id])
+  intakeOwner    User?        @relation("CaseIntake", fields: [intakeOwnerId], references: [id])
+
+  statusHistory  CaseStatusHistory[]
+  conflictChecks ConflictCheck[]
+  proposals      Proposal[]
+  contracts      Contract[]
+  payments       Payment[]
+  driveFolders   DriveFolder[]
+  documents      Document[]
+  surveyRequest  SurveyRequest?
+  surveyPlans    SurveyPlan[]
+  aiRuns         AiRun[]
+  findings       LegalFinding[]
+  riskScores     RiskScore[]
+  lawyerReviews  LawyerReview[]
+  report         Report?
+  roadmapItems   RoadmapItem[]
+}
+
+model CaseStatusHistory {
+  id          String     @id @default(cuid())
+  caseId      String
+  fromStatus  CaseStatus?
+  toStatus    CaseStatus
+  changedById String?
+  note        String?
+  createdAt   DateTime   @default(now())
+
+  case Case @relation(fields: [caseId], references: [id])
+}
+
+model ConflictCheck {
+  id            String         @id @default(cuid())
+  caseId        String
+  result        ConflictResult
+  checkedById   String?
+  matchedAgainst Json?
+  note          String?
+  createdAt     DateTime       @default(now())
+
+  case Case @relation(fields: [caseId], references: [id])
+}
+
+// ───────────────────────── Commercial ─────────────────────────
+model Proposal {
+  id         String         @id @default(cuid())
+  caseId     String
+  package    ServicePackage
+  amount     Int
+  vatAmount  Int            @default(0)
+  currency   String         @default("VND")
+  status     String         @default("draft")
+  validUntil DateTime?
+  createdAt  DateTime       @default(now())
+  updatedAt  DateTime       @updatedAt
+
+  case Case @relation(fields: [caseId], references: [id])
+}
+
+model Contract {
+  id                String   @id @default(cuid())
+  caseId            String
+  proposalId        String?
+  code              String?
+  templateVersion   String?
+  status            String   @default("draft")
+  signedDocumentId  String?
+  signedAt          DateTime?
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  case Case @relation(fields: [caseId], references: [id])
+}
+
+model Payment {
+  id        String   @id @default(cuid())
+  caseId    String
+  milestone String
+  amount    Int
+  method    String?
+  status    String   @default("pending")
+  paidAt    DateTime?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  case Case @relation(fields: [caseId], references: [id])
+}
+
+// ───────────────────────── Documents & Drive ─────────────────────────
+model DriveFolder {
+  id             String            @id @default(cuid())
+  caseId         String
+  driveFolderId  String?
+  name           String
+  parentFolderId String?
+  subfolderKey   String?
+  status         DriveFolderStatus @default(drive_pending)
+  createdAt      DateTime          @default(now())
+  updatedAt      DateTime          @updatedAt
+
+  case Case @relation(fields: [caseId], references: [id])
+}
+
+model DocumentCategory {
+  id        String     @id @default(cuid())
+  key       String     @unique
+  name      String
+  order     Int
+  required  Boolean    @default(false)
+  documents Document[]
+}
+
+model Document {
+  id           String   @id @default(cuid())
+  caseId       String
+  categoryId   String?
+  originalName String
+  storedName   String
+  mimeType     String
+  sizeBytes    Int
+  driveFileId  String?
+  uploaderId   String?
+  checksum     String?
+  status       String   @default("uploaded")
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  case     Case              @relation(fields: [caseId], references: [id])
+  category DocumentCategory? @relation(fields: [categoryId], references: [id])
+  versions DocumentVersion[]
+}
+
+model DocumentVersion {
+  id          String   @id @default(cuid())
+  documentId  String
+  version     Int
+  driveFileId String?
+  uploaderId  String?
+  note        String?
+  createdAt   DateTime @default(now())
+
+  document Document @relation(fields: [documentId], references: [id])
+}
+
+// ───────────────────────── Survey ─────────────────────────
+model SurveyRequest {
+  id            String   @id @default(cuid())
+  caseId        String   @unique
+  payload       Json
+  leadStatus    CaseStatus @default(lead_new)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  case Case @relation(fields: [caseId], references: [id])
+}
+
+model SurveyPlan {
+  id            String   @id @default(cuid())
+  caseId        String
+  mode          String
+  scheduledAt   DateTime?
+  location      String?
+  meetingUrl    String?
+  participants  Json?
+  prepChecklist Json?
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  case     Case            @relation(fields: [caseId], references: [id])
+  sessions SurveySession[]
+}
+
+model SurveySession {
+  id            String   @id @default(cuid())
+  planId        String
+  startedAt     DateTime?
+  endedAt       DateTime?
+  conductedById String?
+  createdAt     DateTime @default(now())
+
+  plan    SurveyPlan      @relation(fields: [planId], references: [id])
+  minutes SurveyMinute[]
+  answers SurveyAnswer[]
+}
+
+model SurveyMinute {
+  id           String   @id @default(cuid())
+  sessionId    String
+  content      Json
+  exportedDocId String?
+  createdAt    DateTime @default(now())
+
+  session SurveySession @relation(fields: [sessionId], references: [id])
+}
+
+model SurveyAnswer {
+  id                 String   @id @default(cuid())
+  sessionId          String
+  groupKey           String
+  questionKey        String
+  answer             String?
+  evidenceDocumentId String?
+  createdAt          DateTime @default(now())
+
+  session SurveySession @relation(fields: [sessionId], references: [id])
+}
+
+// ───────────────────────── AI & legal ─────────────────────────
+model AiRun {
+  id         String      @id @default(cuid())
+  caseId     String
+  type       AiRunType
+  provider   String
+  status     AiRunStatus @default(queued)
+  input      Json?
+  output     Json?
+  confidence Float?
+  error      String?
+  startedAt  DateTime?
+  finishedAt DateTime?
+  createdAt  DateTime    @default(now())
+
+  case            Case             @relation(fields: [caseId], references: [id])
+  extractedFields ExtractedField[]
+}
+
+model ExtractedField {
+  id           String   @id @default(cuid())
+  documentId   String?
+  aiRunId      String?
+  key          String
+  value        String?
+  confidence   Float?
+  verifiedById String?
+  createdAt    DateTime @default(now())
+
+  aiRun AiRun? @relation(fields: [aiRunId], references: [id])
+}
+
+model LegalFinding {
+  id             String        @id @default(cuid())
+  caseId         String
+  code           String
+  groupKey       String
+  title          String
+  description    String
+  riskLevel      RiskLevel
+  recommendation String?
+  confidence     Float?
+  status         FindingStatus @default(ai_draft)
+  needsLawyer    Boolean       @default(true)
+  createdAt      DateTime      @default(now())
+  updatedAt      DateTime      @updatedAt
+
+  case     Case             @relation(fields: [caseId], references: [id])
+  evidence FindingEvidence[]
+}
+
+model FindingEvidence {
+  id         String   @id @default(cuid())
+  findingId  String
+  documentId String?
+  snippet    String
+  legalBasis String?
+  createdAt  DateTime @default(now())
+
+  finding LegalFinding @relation(fields: [findingId], references: [id])
+}
+
+model RiskScore {
+  id       String    @id @default(cuid())
+  caseId   String
+  groupKey String
+  score    Int
+  level    RiskLevel
+  createdAt DateTime @default(now())
+
+  case Case @relation(fields: [caseId], references: [id])
+}
+
+model LawyerReview {
+  id         String   @id @default(cuid())
+  caseId     String
+  findingId  String?
+  reviewerId String
+  action     String
+  note       String?
+  createdAt  DateTime @default(now())
+
+  case Case @relation(fields: [caseId], references: [id])
+}
+
+// ───────────────────────── Report & roadmap ─────────────────────────
+model Report {
+  id               String   @id @default(cuid())
+  caseId           String   @unique
+  currentVersionId String?
+  status           String   @default("draft")
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+
+  case     Case            @relation(fields: [caseId], references: [id])
+  versions ReportVersion[]
+}
+
+model ReportVersion {
+  id          String     @id @default(cuid())
+  reportId    String
+  version     Int
+  kind        ReportKind
+  docxDocId   String?
+  pdfDocId    String?
+  createdById String?
+  approvedById String?
+  lockedAt    DateTime?
+  createdAt   DateTime   @default(now())
+
+  report Report @relation(fields: [reportId], references: [id])
+}
+
+model RoadmapItem {
+  id        String   @id @default(cuid())
+  caseId    String
+  title     String
+  phase     String
+  priority  String   @default("med")
+  ownerRole String?
+  dueAt     DateTime?
+  status    String   @default("open")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  case Case @relation(fields: [caseId], references: [id])
+}
+
+// ───────────────────────── Cross-cutting ─────────────────────────
+model AuditLog {
+  id         String   @id @default(cuid())
+  actorId    String?
+  action     String
+  entityType String
+  entityId   String?
+  metadata   Json?
+  ip         String?
+  createdAt  DateTime @default(now())
+}
+
+model Notification {
+  id        String   @id @default(cuid())
+  userId    String?
+  channel   String
+  title     String
+  body      String?
+  status    String   @default("pending")
+  sentAt    DateTime?
+  createdAt DateTime @default(now())
+}

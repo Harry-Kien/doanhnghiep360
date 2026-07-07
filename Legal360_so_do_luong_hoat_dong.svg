@@ -1,0 +1,247 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1800" height="1120" viewBox="0 0 1800 1120">
+  <defs>
+    <style>
+      .title { font: 700 34px Arial, sans-serif; fill: #0f172a; }
+      .subtitle { font: 400 18px Arial, sans-serif; fill: #475569; }
+      .lane-label { font: 700 17px Arial, sans-serif; fill: #0f172a; }
+      .box-title { font: 700 16px Arial, sans-serif; fill: #0f172a; }
+      .box-text { font: 400 14px Arial, sans-serif; fill: #334155; }
+      .small { font: 400 12px Arial, sans-serif; fill: #475569; }
+      .arrow-label { font: 700 12px Arial, sans-serif; fill: #334155; }
+      .lane { fill: #f8fafc; stroke: #dbe3ef; stroke-width: 1; }
+      .lane-alt { fill: #ffffff; stroke: #dbe3ef; stroke-width: 1; }
+      .step { fill: #ffffff; stroke: #94a3b8; stroke-width: 1.5; rx: 12; }
+      .system { fill: #eff6ff; stroke: #60a5fa; }
+      .intake { fill: #fff7ed; stroke: #fb923c; }
+      .staff { fill: #f0fdf4; stroke: #4ade80; }
+      .ai { fill: #f5f3ff; stroke: #a78bfa; }
+      .lawyer { fill: #fef2f2; stroke: #f87171; }
+      .customer { fill: #ecfeff; stroke: #22d3ee; }
+      .cskh { fill: #f7fee7; stroke: #a3e635; }
+      .gateway { fill: #ffffff; stroke: #64748b; stroke-width: 1.5; }
+      .good { fill: #dcfce7; stroke: #22c55e; }
+      .warn { fill: #fef9c3; stroke: #eab308; }
+      .reject { fill: #fee2e2; stroke: #ef4444; }
+      .line { fill: none; stroke: #475569; stroke-width: 2; marker-end: url(#arrow); }
+      .line-good { fill: none; stroke: #16a34a; stroke-width: 2; marker-end: url(#arrow-good); }
+      .line-warn { fill: none; stroke: #ca8a04; stroke-width: 2; marker-end: url(#arrow-warn); }
+      .line-bad { fill: none; stroke: #dc2626; stroke-width: 2; marker-end: url(#arrow-bad); }
+    </style>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#475569"/>
+    </marker>
+    <marker id="arrow-good" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#16a34a"/>
+    </marker>
+    <marker id="arrow-warn" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#ca8a04"/>
+    </marker>
+    <marker id="arrow-bad" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#dc2626"/>
+    </marker>
+  </defs>
+
+  <rect width="1800" height="1120" fill="#ffffff"/>
+  <text x="70" y="58" class="title">Sơ đồ luồng hoạt động hệ thống Legal360</text>
+  <text x="70" y="88" class="subtitle">Từ khách hàng đăng ký khảo sát đến báo cáo final, roadmap 30-90 ngày và đề xuất retainer</text>
+
+  <!-- lanes -->
+  <rect x="60" y="125" width="1680" height="115" class="lane"/>
+  <rect x="60" y="240" width="1680" height="135" class="lane-alt"/>
+  <rect x="60" y="375" width="1680" height="145" class="lane"/>
+  <rect x="60" y="520" width="1680" height="145" class="lane-alt"/>
+  <rect x="60" y="665" width="1680" height="145" class="lane"/>
+  <rect x="60" y="810" width="1680" height="145" class="lane-alt"/>
+  <rect x="60" y="955" width="1680" height="95" class="lane"/>
+
+  <text x="82" y="150" class="lane-label">Khách hàng</text>
+  <text x="82" y="266" class="lane-label">Hệ thống / Database</text>
+  <text x="82" y="402" class="lane-label">Intake / Sales / Legal Ops</text>
+  <text x="82" y="548" class="lane-label">Staff / Hồ sơ</text>
+  <text x="82" y="694" class="lane-label">OCR / AI</text>
+  <text x="82" y="838" class="lane-label">Luật sư / Reviewer</text>
+  <text x="82" y="985" class="lane-label">CSKH / Follow-up</text>
+
+  <!-- customer row -->
+  <rect x="210" y="145" width="170" height="72" class="step customer"/>
+  <text x="226" y="172" class="box-title">1. Landing page</text>
+  <text x="226" y="196" class="box-text">Bấm đăng ký khảo sát</text>
+
+  <rect x="425" y="145" width="210" height="72" class="step customer"/>
+  <text x="443" y="168" class="box-title">2. Form intake 3 bước</text>
+  <text x="443" y="192" class="box-text">Doanh nghiệp - phạm vi</text>
+  <text x="443" y="210" class="box-text">liên hệ &amp; xác nhận</text>
+
+  <rect x="785" y="145" width="165" height="72" class="step customer"/>
+  <text x="804" y="172" class="box-title">4. Xác thực OTP</text>
+  <text x="804" y="196" class="box-text">Xác nhận email</text>
+
+  <rect x="1210" y="145" width="190" height="72" class="step customer"/>
+  <text x="1228" y="172" class="box-title">Ký HĐ / thanh toán</text>
+  <text x="1228" y="196" class="box-text">Hoàn tất điều kiện mở hồ sơ</text>
+
+  <rect x="1465" y="145" width="180" height="72" class="step customer"/>
+  <text x="1484" y="172" class="box-title">8. Upload tài liệu</text>
+  <text x="1484" y="196" class="box-text">Theo checklist</text>
+
+  <!-- system row -->
+  <rect x="430" y="270" width="220" height="78" class="step system"/>
+  <text x="448" y="294" class="box-title">3. Tạo dữ liệu ban đầu</text>
+  <text x="448" y="318" class="box-text">Lead, survey request</text>
+  <text x="448" y="336" class="box-text">contact, organization, hồ sơ nháp</text>
+
+  <rect x="1210" y="272" width="210" height="82" class="step system"/>
+  <text x="1228" y="296" class="box-title">7. Mở hồ sơ chính thức</text>
+  <text x="1228" y="320" class="box-text">Sinh mã DN-YYYYMMDD</text>
+  <text x="1228" y="338" class="box-text">Tạo kho tài liệu Drive</text>
+
+  <rect x="1480" y="276" width="180" height="72" class="step system"/>
+  <text x="1498" y="302" class="box-title">Lưu metadata</text>
+  <text x="1498" y="326" class="box-text">File, trạng thái, audit</text>
+
+  <rect x="1215" y="850" width="205" height="78" class="step system"/>
+  <text x="1233" y="875" class="box-title">11. Tạo báo cáo nháp</text>
+  <text x="1233" y="899" class="box-text">Tổng hợp finding đã xử lý</text>
+
+  <rect x="1460" y="850" width="210" height="78" class="step system"/>
+  <text x="1478" y="875" class="box-title">Xuất final</text>
+  <text x="1478" y="899" class="box-text">Khóa version</text>
+  <text x="1478" y="917" class="box-text">DOCX / HTML / PDF</text>
+
+  <!-- intake row -->
+  <rect x="765" y="412" width="185" height="72" class="step intake"/>
+  <text x="784" y="438" class="box-title">Nhận lead</text>
+  <text x="784" y="462" class="box-text">Trên dashboard intake</text>
+
+  <rect x="995" y="412" width="180" height="72" class="step intake"/>
+  <text x="1014" y="438" class="box-title">5. Kiểm tra thông tin</text>
+  <text x="1014" y="462" class="box-text">Doanh nghiệp, nhu cầu</text>
+
+  <polygon points="1260,400 1340,448 1260,496 1180,448" class="gateway"/>
+  <text x="1218" y="442" class="box-title">Conflict</text>
+  <text x="1225" y="462" class="box-title">clear?</text>
+
+  <rect x="1450" y="412" width="190" height="72" class="step intake"/>
+  <text x="1468" y="438" class="box-title">6. Báo phí + HĐ</text>
+  <text x="1468" y="462" class="box-text">Theo dõi ký &amp; thanh toán</text>
+
+  <rect x="1180" y="505" width="160" height="52" class="step reject"/>
+  <text x="1200" y="536" class="box-title">Dừng / chờ duyệt</text>
+
+  <!-- staff row -->
+  <rect x="650" y="555" width="210" height="72" class="step staff"/>
+  <text x="668" y="581" class="box-title">Kiểm tra checklist</text>
+  <text x="668" y="605" class="box-text">Tài liệu khách upload</text>
+
+  <polygon points="955,540 1035,592 955,644 875,592" class="gateway"/>
+  <text x="913" y="586" class="box-title">Tài liệu</text>
+  <text x="930" y="606" class="box-title">đủ?</text>
+
+  <rect x="785" y="650" width="190" height="52" class="step warn"/>
+  <text x="805" y="681" class="box-title">Yêu cầu bổ sung</text>
+
+  <rect x="1090" y="555" width="205" height="72" class="step staff"/>
+  <text x="1108" y="581" class="box-title">Chuyển xử lý</text>
+  <text x="1108" y="605" class="box-text">Sang OCR / AI</text>
+
+  <!-- AI row -->
+  <rect x="550" y="705" width="160" height="72" class="step ai"/>
+  <text x="588" y="731" class="box-title">9. OCR</text>
+  <text x="574" y="755" class="box-text">Trích xuất text</text>
+
+  <rect x="760" y="705" width="180" height="72" class="step ai"/>
+  <text x="784" y="731" class="box-title">AI phân loại</text>
+  <text x="784" y="755" class="box-text">Nhóm tài liệu</text>
+
+  <rect x="990" y="705" width="205" height="72" class="step ai"/>
+  <text x="1008" y="731" class="box-title">AI phân tích rủi ro</text>
+  <text x="1008" y="755" class="box-text">Tạo finding bản nháp</text>
+
+  <polygon points="1320,690 1405,742 1320,794 1235,742" class="gateway"/>
+  <text x="1278" y="735" class="box-title">Có evidence?</text>
+  <text x="1290" y="755" class="small">Guard bắt buộc</text>
+
+  <rect x="1450" y="706" width="180" height="72" class="step warn"/>
+  <text x="1468" y="732" class="box-title">Gắn cờ kiểm tra</text>
+  <text x="1468" y="756" class="box-text">Thiếu evidence</text>
+
+  <!-- lawyer row -->
+  <rect x="550" y="850" width="210" height="72" class="step lawyer"/>
+  <text x="568" y="876" class="box-title">10. Luật sư review</text>
+  <text x="568" y="900" class="box-text">Tài liệu gốc + AI draft</text>
+
+  <rect x="805" y="850" width="210" height="72" class="step lawyer"/>
+  <text x="823" y="876" class="box-title">Accept / Edit / Reject</text>
+  <text x="823" y="900" class="box-text">Từng finding</text>
+
+  <polygon points="1110,835 1195,886 1110,937 1025,886" class="gateway"/>
+  <text x="1064" y="878" class="box-title">Đủ điều kiện</text>
+  <text x="1084" y="898" class="box-title">final?</text>
+
+  <rect x="1005" y="950" width="190" height="52" class="step warn"/>
+  <text x="1023" y="981" class="box-title">Chỉnh sửa / bổ sung</text>
+
+  <!-- CSKH row -->
+  <rect x="1195" y="980" width="160" height="52" class="step cskh"/>
+  <text x="1216" y="1011" class="box-title">Bàn giao</text>
+
+  <rect x="1400" y="980" width="180" height="52" class="step cskh"/>
+  <text x="1418" y="1002" class="box-title">Roadmap 30-90</text>
+  <text x="1418" y="1020" class="box-text">Theo dõi thực hiện</text>
+
+  <rect x="1615" y="980" width="105" height="52" class="step cskh"/>
+  <text x="1632" y="1011" class="box-title">Retainer</text>
+
+  <!-- arrows main -->
+  <path d="M380 181 H425" class="line"/>
+  <path d="M635 181 C680 181 680 309 430 309" class="line"/>
+  <path d="M650 309 C720 309 720 181 785 181" class="line"/>
+  <path d="M950 181 C1000 181 1000 448 765 448" class="line"/>
+  <path d="M950 448 H995" class="line"/>
+  <path d="M1175 448 H1180" class="line"/>
+  <path d="M1340 448 H1450" class="line-good"/>
+  <text x="1368" y="438" class="arrow-label">Có</text>
+  <path d="M1260 496 V505" class="line-bad"/>
+  <text x="1280" y="518" class="arrow-label">Không</text>
+  <path d="M1545 412 C1545 330 1420 330 1420 313" class="line"/>
+  <path d="M1210 181 C1170 181 1170 313 1210 313" class="line"/>
+  <path d="M1420 313 C1460 313 1460 181 1465 181" class="line"/>
+  <path d="M1555 217 V276" class="line"/>
+  <path d="M1480 312 C1330 312 1330 555 860 591" class="line"/>
+  <path d="M860 592 H875" class="line"/>
+  <path d="M1035 592 H1090" class="line-good"/>
+  <text x="1048" y="582" class="arrow-label">Đủ</text>
+  <path d="M955 644 C955 662 940 670 975 676" class="line-warn"/>
+  <path d="M785 676 C715 676 715 181 1465 181" class="line-warn"/>
+  <text x="820" y="716" class="arrow-label">Thiếu - quay lại khách upload</text>
+  <path d="M1295 591 C1340 591 1340 742 550 742" class="line"/>
+  <path d="M710 742 H760" class="line"/>
+  <path d="M940 742 H990" class="line"/>
+  <path d="M1195 742 H1235" class="line"/>
+  <path d="M1405 742 H1450" class="line-warn"/>
+  <text x="1416" y="732" class="arrow-label">Không</text>
+  <path d="M1320 794 C1320 840 760 830 760 886" class="line-good"/>
+  <text x="1340" y="820" class="arrow-label">Có</text>
+  <path d="M1450 778 C1370 840 760 820 760 886" class="line-warn"/>
+  <path d="M760 886 H805" class="line"/>
+  <path d="M1015 886 H1025" class="line"/>
+  <path d="M1195 886 H1215" class="line-good"/>
+  <text x="1200" y="876" class="arrow-label">Có</text>
+  <path d="M1110 937 V950" class="line-warn"/>
+  <text x="1125" y="948" class="arrow-label">Chưa</text>
+  <path d="M1005 976 C880 976 880 676 975 676" class="line-warn"/>
+  <path d="M1420 889 H1460" class="line"/>
+  <path d="M1670 889 C1710 889 1710 1006 1195 1006" class="line"/>
+  <path d="M1355 1006 H1400" class="line"/>
+  <path d="M1580 1006 H1615" class="line"/>
+
+  <!-- legend -->
+  <rect x="70" y="1064" width="1660" height="38" fill="#ffffff" stroke="#e2e8f0"/>
+  <circle cx="92" cy="1083" r="7" fill="#16a34a"/>
+  <text x="108" y="1088" class="small">Nhánh đạt điều kiện</text>
+  <circle cx="252" cy="1083" r="7" fill="#ca8a04"/>
+  <text x="268" y="1088" class="small">Quay lại bổ sung / chỉnh sửa</text>
+  <circle cx="468" cy="1083" r="7" fill="#dc2626"/>
+  <text x="484" y="1088" class="small">Dừng / bị chặn</text>
+  <text x="650" y="1088" class="small">Các gateway chính: Conflict clear? - Tài liệu đủ? - Finding có evidence? - Đủ điều kiện final?</text>
+</svg>

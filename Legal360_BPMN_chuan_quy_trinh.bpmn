@@ -1,0 +1,386 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_Legal360" targetNamespace="https://legal360.local/bpmn">
+  <bpmn:process id="Process_Legal360" name="Legal360 - Enterprise Legal Survey Workflow" isExecutable="false">
+    <bpmn:laneSet id="LaneSet_Legal360">
+      <bpmn:lane id="lane_customer" name="Khach hang">
+        <bpmn:flowNodeRef>start</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>landing</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>intake_form</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>otp</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>payment</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>upload_docs</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="lane_system" name="He thong / Database">
+        <bpmn:flowNodeRef>create_lead</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>open_case</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>store_docs</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="lane_intake" name="Intake / Sales / Legal Ops">
+        <bpmn:flowNodeRef>receive_lead</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>check_info</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>gw_conflict</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>stop_conflict</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>proposal</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="lane_docs" name="Staff / Ho so">
+        <bpmn:flowNodeRef>check_docs</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>gw_docs</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>request_more</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>handoff_ai</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="lane_ai" name="OCR / AI">
+        <bpmn:flowNodeRef>ocr</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>classify</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>analyze</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>gw_evidence</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>flag_evidence</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="lane_lawyer" name="Luat su / Reviewer">
+        <bpmn:flowNodeRef>lawyer_review</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>finding_review</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>gw_final</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>revise</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>draft_report</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>final_report</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="lane_cskh" name="CSKH / Follow-up">
+        <bpmn:flowNodeRef>deliver</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>roadmap</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>retainer</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>end</bpmn:flowNodeRef>
+      </bpmn:lane>
+    </bpmn:laneSet>
+    <bpmn:startEvent id="start" name="Bat dau">
+      <bpmn:outgoing>f1</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:userTask id="landing" name="Truy cap landing page - va bam dang ky">
+      <bpmn:incoming>f1</bpmn:incoming>
+      <bpmn:outgoing>f2</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:userTask id="intake_form" name="Dien form intake 3 buoc - Doanh nghiep - pham vi - lien he">
+      <bpmn:incoming>f2</bpmn:incoming>
+      <bpmn:outgoing>f3</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:serviceTask id="create_lead" name="Tao lead + survey request - contact + organization + ho so nhap">
+      <bpmn:incoming>f3</bpmn:incoming>
+      <bpmn:outgoing>f4</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:userTask id="otp" name="Xac thuc OTP email">
+      <bpmn:incoming>f4</bpmn:incoming>
+      <bpmn:outgoing>f5</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:userTask id="receive_lead" name="Intake nhan lead - tren dashboard">
+      <bpmn:incoming>f5</bpmn:incoming>
+      <bpmn:outgoing>f6</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:userTask id="check_info" name="Kiem tra thong tin - khach hang">
+      <bpmn:incoming>f6</bpmn:incoming>
+      <bpmn:outgoing>f7</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:exclusiveGateway id="gw_conflict" name="Conflict - clear?">
+      <bpmn:incoming>f7</bpmn:incoming>
+      <bpmn:outgoing>f8</bpmn:outgoing>
+      <bpmn:outgoing>f9</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:endEvent id="stop_conflict" name="Dung / cho - partner duyet">
+      <bpmn:incoming>f8</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:userTask id="proposal" name="Gui bao phi - Tao hop dong">
+      <bpmn:incoming>f9</bpmn:incoming>
+      <bpmn:outgoing>f10</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:userTask id="payment" name="Ky hop dong - va thanh toan">
+      <bpmn:incoming>f10</bpmn:incoming>
+      <bpmn:outgoing>f11</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:serviceTask id="open_case" name="Mo ho so chinh thuc - Sinh ma + tao Drive">
+      <bpmn:incoming>f11</bpmn:incoming>
+      <bpmn:outgoing>f12</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:userTask id="upload_docs" name="Upload tai lieu - theo checklist">
+      <bpmn:incoming>f12</bpmn:incoming>
+      <bpmn:outgoing>f13</bpmn:outgoing>
+      <bpmn:incoming>f17</bpmn:incoming>
+    </bpmn:userTask>
+    <bpmn:serviceTask id="store_docs" name="Luu metadata - file, trang thai, audit">
+      <bpmn:incoming>f13</bpmn:incoming>
+      <bpmn:outgoing>f14</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:userTask id="check_docs" name="Kiem tra checklist - tai lieu">
+      <bpmn:incoming>f14</bpmn:incoming>
+      <bpmn:outgoing>f15</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:exclusiveGateway id="gw_docs" name="Tai lieu - du?">
+      <bpmn:incoming>f15</bpmn:incoming>
+      <bpmn:outgoing>f16</bpmn:outgoing>
+      <bpmn:outgoing>f18</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:userTask id="request_more" name="Yeu cau bo sung - tai lieu">
+      <bpmn:incoming>f16</bpmn:incoming>
+      <bpmn:outgoing>f17</bpmn:outgoing>
+      <bpmn:incoming>f29</bpmn:incoming>
+    </bpmn:userTask>
+    <bpmn:userTask id="handoff_ai" name="Chuyen xu ly - OCR / AI">
+      <bpmn:incoming>f18</bpmn:incoming>
+      <bpmn:outgoing>f19</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:serviceTask id="ocr" name="OCR tai lieu">
+      <bpmn:incoming>f19</bpmn:incoming>
+      <bpmn:outgoing>f20</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:serviceTask id="classify" name="AI phan loai - tai lieu">
+      <bpmn:incoming>f20</bpmn:incoming>
+      <bpmn:outgoing>f21</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:serviceTask id="analyze" name="AI phan tich rui ro - tao finding draft">
+      <bpmn:incoming>f21</bpmn:incoming>
+      <bpmn:outgoing>f22</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:exclusiveGateway id="gw_evidence" name="Co - evidence?">
+      <bpmn:incoming>f22</bpmn:incoming>
+      <bpmn:outgoing>f23</bpmn:outgoing>
+      <bpmn:outgoing>f25</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:serviceTask id="flag_evidence" name="Gan co kiem tra - thieu evidence">
+      <bpmn:incoming>f23</bpmn:incoming>
+      <bpmn:outgoing>f24</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:userTask id="lawyer_review" name="Luat su review - tai lieu goc + AI draft">
+      <bpmn:incoming>f24</bpmn:incoming>
+      <bpmn:incoming>f25</bpmn:incoming>
+      <bpmn:outgoing>f26</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:userTask id="finding_review" name="Accept / Edit / Reject - tung finding">
+      <bpmn:incoming>f26</bpmn:incoming>
+      <bpmn:outgoing>f27</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:exclusiveGateway id="gw_final" name="Du dieu kien - final?">
+      <bpmn:incoming>f27</bpmn:incoming>
+      <bpmn:outgoing>f28</bpmn:outgoing>
+      <bpmn:outgoing>f30</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:userTask id="revise" name="Chinh sua - hoac bo sung">
+      <bpmn:incoming>f28</bpmn:incoming>
+      <bpmn:outgoing>f29</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:serviceTask id="draft_report" name="Tao bao cao nhap">
+      <bpmn:incoming>f30</bpmn:incoming>
+      <bpmn:outgoing>f31</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:serviceTask id="final_report" name="Duyet final - khoa version + xuat file">
+      <bpmn:incoming>f31</bpmn:incoming>
+      <bpmn:outgoing>f32</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:userTask id="deliver" name="Ban giao - bao cao">
+      <bpmn:incoming>f32</bpmn:incoming>
+      <bpmn:outgoing>f33</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:userTask id="roadmap" name="Roadmap - 30-90 ngay">
+      <bpmn:incoming>f33</bpmn:incoming>
+      <bpmn:outgoing>f34</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:userTask id="retainer" name="De xuat - retainer">
+      <bpmn:incoming>f34</bpmn:incoming>
+      <bpmn:outgoing>f35</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:endEvent id="end" name="Ket thuc">
+      <bpmn:incoming>f35</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="f1" sourceRef="start" targetRef="landing" />
+    <bpmn:sequenceFlow id="f2" sourceRef="landing" targetRef="intake_form" />
+    <bpmn:sequenceFlow id="f3" sourceRef="intake_form" targetRef="create_lead" />
+    <bpmn:sequenceFlow id="f4" sourceRef="create_lead" targetRef="otp" />
+    <bpmn:sequenceFlow id="f5" sourceRef="otp" targetRef="receive_lead" />
+    <bpmn:sequenceFlow id="f6" sourceRef="receive_lead" targetRef="check_info" />
+    <bpmn:sequenceFlow id="f7" sourceRef="check_info" targetRef="gw_conflict" />
+    <bpmn:sequenceFlow id="f8" name="No" sourceRef="gw_conflict" targetRef="stop_conflict" />
+    <bpmn:sequenceFlow id="f9" name="Yes" sourceRef="gw_conflict" targetRef="proposal" />
+    <bpmn:sequenceFlow id="f10" sourceRef="proposal" targetRef="payment" />
+    <bpmn:sequenceFlow id="f11" sourceRef="payment" targetRef="open_case" />
+    <bpmn:sequenceFlow id="f12" sourceRef="open_case" targetRef="upload_docs" />
+    <bpmn:sequenceFlow id="f13" sourceRef="upload_docs" targetRef="store_docs" />
+    <bpmn:sequenceFlow id="f14" sourceRef="store_docs" targetRef="check_docs" />
+    <bpmn:sequenceFlow id="f15" sourceRef="check_docs" targetRef="gw_docs" />
+    <bpmn:sequenceFlow id="f16" name="No" sourceRef="gw_docs" targetRef="request_more" />
+    <bpmn:sequenceFlow id="f17" name="Bo sung" sourceRef="request_more" targetRef="upload_docs" />
+    <bpmn:sequenceFlow id="f18" name="Yes" sourceRef="gw_docs" targetRef="handoff_ai" />
+    <bpmn:sequenceFlow id="f19" sourceRef="handoff_ai" targetRef="ocr" />
+    <bpmn:sequenceFlow id="f20" sourceRef="ocr" targetRef="classify" />
+    <bpmn:sequenceFlow id="f21" sourceRef="classify" targetRef="analyze" />
+    <bpmn:sequenceFlow id="f22" sourceRef="analyze" targetRef="gw_evidence" />
+    <bpmn:sequenceFlow id="f23" name="No" sourceRef="gw_evidence" targetRef="flag_evidence" />
+    <bpmn:sequenceFlow id="f24" sourceRef="flag_evidence" targetRef="lawyer_review" />
+    <bpmn:sequenceFlow id="f25" name="Yes" sourceRef="gw_evidence" targetRef="lawyer_review" />
+    <bpmn:sequenceFlow id="f26" sourceRef="lawyer_review" targetRef="finding_review" />
+    <bpmn:sequenceFlow id="f27" sourceRef="finding_review" targetRef="gw_final" />
+    <bpmn:sequenceFlow id="f28" name="No" sourceRef="gw_final" targetRef="revise" />
+    <bpmn:sequenceFlow id="f29" name="Bo sung" sourceRef="revise" targetRef="request_more" />
+    <bpmn:sequenceFlow id="f30" name="Yes" sourceRef="gw_final" targetRef="draft_report" />
+    <bpmn:sequenceFlow id="f31" sourceRef="draft_report" targetRef="final_report" />
+    <bpmn:sequenceFlow id="f32" sourceRef="final_report" targetRef="deliver" />
+    <bpmn:sequenceFlow id="f33" sourceRef="deliver" targetRef="roadmap" />
+    <bpmn:sequenceFlow id="f34" sourceRef="roadmap" targetRef="retainer" />
+    <bpmn:sequenceFlow id="f35" sourceRef="retainer" targetRef="end" />
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_Legal360"><bpmndi:BPMNPlane id="BPMNPlane_Legal360" bpmnElement="Process_Legal360">
+    <bpmndi:BPMNShape id="Shape_lane_customer" bpmnElement="lane_customer" isHorizontal="true"><dc:Bounds x="55" y="92" width="1990" height="112" /></bpmndi:BPMNShape>
+    <bpmndi:BPMNShape id="Shape_lane_system" bpmnElement="lane_system" isHorizontal="true"><dc:Bounds x="55" y="217" width="1990" height="112" /></bpmndi:BPMNShape>
+    <bpmndi:BPMNShape id="Shape_lane_intake" bpmnElement="lane_intake" isHorizontal="true"><dc:Bounds x="55" y="342" width="1990" height="112" /></bpmndi:BPMNShape>
+    <bpmndi:BPMNShape id="Shape_lane_docs" bpmnElement="lane_docs" isHorizontal="true"><dc:Bounds x="55" y="467" width="1990" height="112" /></bpmndi:BPMNShape>
+    <bpmndi:BPMNShape id="Shape_lane_ai" bpmnElement="lane_ai" isHorizontal="true"><dc:Bounds x="55" y="592" width="1990" height="112" /></bpmndi:BPMNShape>
+    <bpmndi:BPMNShape id="Shape_lane_lawyer" bpmnElement="lane_lawyer" isHorizontal="true"><dc:Bounds x="55" y="717" width="1990" height="112" /></bpmndi:BPMNShape>
+    <bpmndi:BPMNShape id="Shape_lane_cskh" bpmnElement="lane_cskh" isHorizontal="true"><dc:Bounds x="55" y="842" width="1990" height="112" /></bpmndi:BPMNShape>
+    <bpmndi:BPMNShape id="Shape_start" bpmnElement="start"><dc:Bounds x="230" y="148" width="40" height="40" /></bpmndi:BPMNShape>
+    <bpmndi:BPMNShape id="Shape_landing" bpmnElement="landing"><dc:Bounds x="315" y="128" width="180" height="78" /></bpmndi:BPMNShape>
+    <bpmndi:BPMNShape id="Shape_intake_form" bpmnElement="intake_form"><dc:Bounds x="540" y="128" width="210" height="78" /></bpmndi:BPMNShape>
+    <bpmndi:BPMNShape id="Shape_create_lead" bpmnElement="create_lead"><dc:Bounds x="540" y="250" width="220" height="80" /></bpmndi:BPMNShape>
+    <bpmndi:BPMNShape id="Shape_otp" bpmnElement="otp"><dc:Bounds x="815" y="128" width="180" height="78" /></bpmndi:BPMNShape>
+    <bpmndi:BPMNShape id="Shape_receive_lead" bpmnElement="receive_lead"><dc:Bounds x="815" y="378" width="180" height="76" /></bpmndi:BPMNShape>
+    <bpmndi:BPMNShape id="Shape_check_info" bpmnElement="check_info"><dc:Bounds x="1035" y="378" width="180" height="76" /></bpmndi:BPMNShape>
+    <bpmndi:BPMNShape id="Shape_gw_conflict" bpmnElement="gw_conflict"><dc:Bounds x="1265" y="386" width="64" height="64" /></bpmndi:BPMNShape>
+    <bpmndi:BPMNShape id="Shape_stop_conflict" bpmnElement="stop_conflict"><dc:Bounds x="1267" y="475" width="58" height="58" /></bpmndi:BPMNShape>
+    <bpmndi:BPMNShape id="Shape_proposal" bpmnElement="proposal"><dc:Bounds x="1390" y="378" width="190" height="76" /></bpmndi:BPMNShape>
+    <bpmndi:BPMNShape id="Shape_payment" bpmnElement="payment"><dc:Bounds x="1390" y="128" width="190" height="78" /></bpmndi:BPMNShape>
+    <bpmndi:BPMNShape id="Shape_open_case" bpmnElement="open_case"><dc:Bounds x="1390" y="250" width="210" height="80" /></bpmndi:BPMNShape>
+    <bpmndi:BPMNShape id="Shape_upload_docs" bpmnElement="upload_docs"><dc:Bounds x="1640" y="128" width="190" height="78" /></bpmndi:BPMNShape>
+    <bpmndi:BPMNShape id="Shape_store_docs" bpmnElement="store_docs"><dc:Bounds x="1640" y="250" width="190" height="80" /></bpmndi:BPMNShape>
+    <bpmndi:BPMNShape id="Shape_check_docs" bpmnElement="check_docs"><dc:Bounds x="780" y="500" width="190" height="76" /></bpmndi:BPMNShape>
+    <bpmndi:BPMNShape id="Shape_gw_docs" bpmnElement="gw_docs"><dc:Bounds x="1035" y="506" width="64" height="64" /></bpmndi:BPMNShape>
+    <bpmndi:BPMNShape id="Shape_request_more" bpmnElement="request_more"><dc:Bounds x="930" y="585" width="180" height="64" /></bpmndi:BPMNShape>
+    <bpmndi:BPMNShape id="Shape_handoff_ai" bpmnElement="handoff_ai"><dc:Bounds x="1190" y="500" width="180" height="76" /></bpmndi:BPMNShape>
+    <bpmndi:BPMNShape id="Shape_ocr" bpmnElement="ocr"><dc:Bounds x="600" y="628" width="160" height="70" /></bpmndi:BPMNShape>
+    <bpmndi:BPMNShape id="Shape_classify" bpmnElement="classify"><dc:Bounds x="805" y="628" width="175" height="70" /></bpmndi:BPMNShape>
+    <bpmndi:BPMNShape id="Shape_analyze" bpmnElement="analyze"><dc:Bounds x="1025" y="628" width="205" height="70" /></bpmndi:BPMNShape>
+    <bpmndi:BPMNShape id="Shape_gw_evidence" bpmnElement="gw_evidence"><dc:Bounds x="1285" y="632" width="68" height="68" /></bpmndi:BPMNShape>
+    <bpmndi:BPMNShape id="Shape_flag_evidence" bpmnElement="flag_evidence"><dc:Bounds x="1420" y="628" width="190" height="70" /></bpmndi:BPMNShape>
+    <bpmndi:BPMNShape id="Shape_lawyer_review" bpmnElement="lawyer_review"><dc:Bounds x="600" y="755" width="210" height="76" /></bpmndi:BPMNShape>
+    <bpmndi:BPMNShape id="Shape_finding_review" bpmnElement="finding_review"><dc:Bounds x="860" y="755" width="210" height="76" /></bpmndi:BPMNShape>
+    <bpmndi:BPMNShape id="Shape_gw_final" bpmnElement="gw_final"><dc:Bounds x="1135" y="758" width="70" height="70" /></bpmndi:BPMNShape>
+    <bpmndi:BPMNShape id="Shape_revise" bpmnElement="revise"><dc:Bounds x="1115" y="840" width="190" height="60" /></bpmndi:BPMNShape>
+    <bpmndi:BPMNShape id="Shape_draft_report" bpmnElement="draft_report"><dc:Bounds x="1280" y="755" width="200" height="76" /></bpmndi:BPMNShape>
+    <bpmndi:BPMNShape id="Shape_final_report" bpmnElement="final_report"><dc:Bounds x="1530" y="755" width="210" height="76" /></bpmndi:BPMNShape>
+    <bpmndi:BPMNShape id="Shape_deliver" bpmnElement="deliver"><dc:Bounds x="1320" y="885" width="160" height="64" /></bpmndi:BPMNShape>
+    <bpmndi:BPMNShape id="Shape_roadmap" bpmnElement="roadmap"><dc:Bounds x="1520" y="885" width="180" height="64" /></bpmndi:BPMNShape>
+    <bpmndi:BPMNShape id="Shape_retainer" bpmnElement="retainer"><dc:Bounds x="1740" y="885" width="150" height="64" /></bpmndi:BPMNShape>
+    <bpmndi:BPMNShape id="Shape_end" bpmnElement="end"><dc:Bounds x="1935" y="897" width="40" height="40" /></bpmndi:BPMNShape>
+    <bpmndi:BPMNEdge id="Edge_f1" bpmnElement="f1">
+      <di:waypoint x="270" y="168.0" /><di:waypoint x="315" y="167.0" />
+    </bpmndi:BPMNEdge>
+    <bpmndi:BPMNEdge id="Edge_f2" bpmnElement="f2">
+      <di:waypoint x="495" y="167.0" /><di:waypoint x="540" y="167.0" />
+    </bpmndi:BPMNEdge>
+    <bpmndi:BPMNEdge id="Edge_f3" bpmnElement="f3">
+      <di:waypoint x="645.0" y="206" /><di:waypoint x="650.0" y="250" />
+    </bpmndi:BPMNEdge>
+    <bpmndi:BPMNEdge id="Edge_f4" bpmnElement="f4">
+      <di:waypoint x="760" y="290.0" /><di:waypoint x="815" y="167.0" />
+    </bpmndi:BPMNEdge>
+    <bpmndi:BPMNEdge id="Edge_f5" bpmnElement="f5">
+      <di:waypoint x="905.0" y="206" /><di:waypoint x="905.0" y="378" />
+    </bpmndi:BPMNEdge>
+    <bpmndi:BPMNEdge id="Edge_f6" bpmnElement="f6">
+      <di:waypoint x="995" y="416.0" /><di:waypoint x="1035" y="416.0" />
+    </bpmndi:BPMNEdge>
+    <bpmndi:BPMNEdge id="Edge_f7" bpmnElement="f7">
+      <di:waypoint x="1215" y="416.0" /><di:waypoint x="1265" y="418.0" />
+    </bpmndi:BPMNEdge>
+    <bpmndi:BPMNEdge id="Edge_f8" bpmnElement="f8">
+      <di:waypoint x="1297.0" y="450" /><di:waypoint x="1296.0" y="475" />
+    </bpmndi:BPMNEdge>
+    <bpmndi:BPMNEdge id="Edge_f9" bpmnElement="f9">
+      <di:waypoint x="1329" y="418.0" /><di:waypoint x="1390" y="416.0" />
+    </bpmndi:BPMNEdge>
+    <bpmndi:BPMNEdge id="Edge_f10" bpmnElement="f10">
+      <di:waypoint x="1485.0" y="378" /><di:waypoint x="1485.0" y="206" />
+    </bpmndi:BPMNEdge>
+    <bpmndi:BPMNEdge id="Edge_f11" bpmnElement="f11">
+      <di:waypoint x="1485.0" y="206" /><di:waypoint x="1495.0" y="250" />
+    </bpmndi:BPMNEdge>
+    <bpmndi:BPMNEdge id="Edge_f12" bpmnElement="f12">
+      <di:waypoint x="1600" y="290.0" /><di:waypoint x="1640" y="167.0" />
+    </bpmndi:BPMNEdge>
+    <bpmndi:BPMNEdge id="Edge_f13" bpmnElement="f13">
+      <di:waypoint x="1735.0" y="206" /><di:waypoint x="1735.0" y="250" />
+    </bpmndi:BPMNEdge>
+    <bpmndi:BPMNEdge id="Edge_f14" bpmnElement="f14">
+      <di:waypoint x="1640" y="290.0" />
+      <di:waypoint x="1695" y="414.0" />
+      <di:waypoint x="915" y="414.0" />
+      <di:waypoint x="970" y="538.0" />
+    </bpmndi:BPMNEdge>
+    <bpmndi:BPMNEdge id="Edge_f15" bpmnElement="f15">
+      <di:waypoint x="970" y="538.0" /><di:waypoint x="1035" y="538.0" />
+    </bpmndi:BPMNEdge>
+    <bpmndi:BPMNEdge id="Edge_f16" bpmnElement="f16">
+      <di:waypoint x="1067.0" y="570" /><di:waypoint x="1020.0" y="585" />
+    </bpmndi:BPMNEdge>
+    <bpmndi:BPMNEdge id="Edge_f17" bpmnElement="f17">
+      <di:waypoint x="1110" y="617.0" /><di:waypoint x="1640" y="167.0" />
+    </bpmndi:BPMNEdge>
+    <bpmndi:BPMNEdge id="Edge_f18" bpmnElement="f18">
+      <di:waypoint x="1099" y="538.0" /><di:waypoint x="1190" y="538.0" />
+    </bpmndi:BPMNEdge>
+    <bpmndi:BPMNEdge id="Edge_f19" bpmnElement="f19">
+      <di:waypoint x="1190" y="538.0" />
+      <di:waypoint x="1245" y="600.5" />
+      <di:waypoint x="705" y="600.5" />
+      <di:waypoint x="760" y="663.0" />
+    </bpmndi:BPMNEdge>
+    <bpmndi:BPMNEdge id="Edge_f20" bpmnElement="f20">
+      <di:waypoint x="760" y="663.0" /><di:waypoint x="805" y="663.0" />
+    </bpmndi:BPMNEdge>
+    <bpmndi:BPMNEdge id="Edge_f21" bpmnElement="f21">
+      <di:waypoint x="980" y="663.0" /><di:waypoint x="1025" y="663.0" />
+    </bpmndi:BPMNEdge>
+    <bpmndi:BPMNEdge id="Edge_f22" bpmnElement="f22">
+      <di:waypoint x="1230" y="663.0" /><di:waypoint x="1285" y="666.0" />
+    </bpmndi:BPMNEdge>
+    <bpmndi:BPMNEdge id="Edge_f23" bpmnElement="f23">
+      <di:waypoint x="1353" y="666.0" /><di:waypoint x="1420" y="663.0" />
+    </bpmndi:BPMNEdge>
+    <bpmndi:BPMNEdge id="Edge_f24" bpmnElement="f24">
+      <di:waypoint x="1420" y="663.0" />
+      <di:waypoint x="1475" y="728.0" />
+      <di:waypoint x="755" y="728.0" />
+      <di:waypoint x="810" y="793.0" />
+    </bpmndi:BPMNEdge>
+    <bpmndi:BPMNEdge id="Edge_f25" bpmnElement="f25">
+      <di:waypoint x="1285" y="666.0" />
+      <di:waypoint x="1340" y="729.5" />
+      <di:waypoint x="755" y="729.5" />
+      <di:waypoint x="810" y="793.0" />
+    </bpmndi:BPMNEdge>
+    <bpmndi:BPMNEdge id="Edge_f26" bpmnElement="f26">
+      <di:waypoint x="810" y="793.0" /><di:waypoint x="860" y="793.0" />
+    </bpmndi:BPMNEdge>
+    <bpmndi:BPMNEdge id="Edge_f27" bpmnElement="f27">
+      <di:waypoint x="1070" y="793.0" /><di:waypoint x="1135" y="793.0" />
+    </bpmndi:BPMNEdge>
+    <bpmndi:BPMNEdge id="Edge_f28" bpmnElement="f28">
+      <di:waypoint x="1170.0" y="828" /><di:waypoint x="1210.0" y="840" />
+    </bpmndi:BPMNEdge>
+    <bpmndi:BPMNEdge id="Edge_f29" bpmnElement="f29">
+      <di:waypoint x="1210.0" y="840" />
+      <di:waypoint x="1265.0" y="744.5" />
+      <di:waypoint x="965.0" y="744.5" />
+      <di:waypoint x="1020.0" y="649" />
+    </bpmndi:BPMNEdge>
+    <bpmndi:BPMNEdge id="Edge_f30" bpmnElement="f30">
+      <di:waypoint x="1205" y="793.0" /><di:waypoint x="1280" y="793.0" />
+    </bpmndi:BPMNEdge>
+    <bpmndi:BPMNEdge id="Edge_f31" bpmnElement="f31">
+      <di:waypoint x="1480" y="793.0" /><di:waypoint x="1530" y="793.0" />
+    </bpmndi:BPMNEdge>
+    <bpmndi:BPMNEdge id="Edge_f32" bpmnElement="f32">
+      <di:waypoint x="1530" y="793.0" /><di:waypoint x="1480" y="917.0" />
+    </bpmndi:BPMNEdge>
+    <bpmndi:BPMNEdge id="Edge_f33" bpmnElement="f33">
+      <di:waypoint x="1480" y="917.0" /><di:waypoint x="1520" y="917.0" />
+    </bpmndi:BPMNEdge>
+    <bpmndi:BPMNEdge id="Edge_f34" bpmnElement="f34">
+      <di:waypoint x="1700" y="917.0" /><di:waypoint x="1740" y="917.0" />
+    </bpmndi:BPMNEdge>
+    <bpmndi:BPMNEdge id="Edge_f35" bpmnElement="f35">
+      <di:waypoint x="1890" y="917.0" /><di:waypoint x="1935" y="917.0" />
+    </bpmndi:BPMNEdge>
+  </bpmndi:BPMNPlane></bpmndi:BPMNDiagram></bpmn:definitions>

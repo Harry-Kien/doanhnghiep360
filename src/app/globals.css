@@ -1,0 +1,168 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 210 40% 98%;
+    --foreground: 222 47% 11%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 222 47% 11%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 222 47% 11%;
+
+    /* Primary = xanh dương LegalFlow */
+    --primary: 221 83% 53%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 210 40% 96%;
+    --secondary-foreground: 222 47% 18%;
+
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 215 16% 42%;
+
+    --accent: 213 94% 95%;
+    --accent-foreground: 221 83% 40%;
+
+    --destructive: 0 72% 48%;
+    --destructive-foreground: 210 40% 98%;
+
+    --success: 152 56% 34%;
+    --success-foreground: 210 40% 98%;
+
+    --warning: 35 92% 45%;
+    --warning-foreground: 0 0% 100%;
+
+    --border: 214 32% 90%;
+    --input: 214 32% 88%;
+    --ring: 221 83% 53%;
+
+    /* Sidebar (luôn tối, theo LegalFlow) */
+    --sidebar: 0 0% 100%;
+    --sidebar-foreground: 215 16% 32%;
+    --sidebar-active: 222 47% 11%;
+
+    --radius: 0.6rem;
+  }
+
+  .dark {
+    --background: 222 47% 8%;
+    --foreground: 210 40% 96%;
+
+    --card: 222 41% 11%;
+    --card-foreground: 210 40% 96%;
+
+    --popover: 222 41% 11%;
+    --popover-foreground: 210 40% 96%;
+
+    --primary: 217 91% 60%;
+    --primary-foreground: 222 47% 8%;
+
+    --secondary: 217 33% 16%;
+    --secondary-foreground: 210 40% 96%;
+
+    --muted: 217 33% 16%;
+    --muted-foreground: 215 20% 60%;
+
+    --accent: 217 33% 18%;
+    --accent-foreground: 210 40% 96%;
+
+    --destructive: 0 63% 50%;
+    --destructive-foreground: 210 40% 98%;
+
+    --success: 152 50% 45%;
+    --success-foreground: 222 47% 8%;
+
+    --warning: 35 92% 55%;
+    --warning-foreground: 222 47% 8%;
+
+    --border: 217 33% 20%;
+    --input: 217 33% 22%;
+    --ring: 217 91% 60%;
+
+    --sidebar: 222 47% 7%;
+    --sidebar-foreground: 215 20% 72%;
+    --sidebar-active: 217 91% 60%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+  html {
+    font-size: 14px;
+  }
+  .truncate-2 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+}
+
+@layer utilities {
+  .custom-scrollbar::-webkit-scrollbar {
+    height: 6px;
+    width: 6px;
+  }
+  .custom-scrollbar::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    border-radius: 999px;
+    background: hsl(var(--muted-foreground) / 0.28);
+  }
+  .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: hsl(var(--muted-foreground) / 0.45);
+  }
+
+  .section-card {
+    @apply overflow-hidden rounded-lg border border-border bg-card;
+  }
+
+  .section-header {
+    @apply flex items-center justify-between gap-3 border-b border-border px-4 py-3;
+  }
+
+  .section-title {
+    @apply text-sm font-semibold text-slate-950 dark:text-slate-100;
+  }
+
+  .section-subtitle {
+    @apply mt-0.5 text-[11px] text-muted-foreground;
+  }
+
+  .action-row {
+    @apply flex items-center gap-3 border-b border-border/70 px-4 py-3 transition-colors last:border-0 hover:bg-secondary/60;
+  }
+
+  .data-table {
+    @apply w-full text-sm;
+  }
+
+  .data-table th {
+    @apply border-b border-border bg-secondary/70 px-4 py-3 text-left text-[10px] font-semibold uppercase tracking-wider text-muted-foreground;
+  }
+
+  .data-table td {
+    @apply border-b border-border/70 px-4 py-3 align-middle text-sm;
+  }
+
+  .data-table tbody tr {
+    @apply transition-colors hover:bg-secondary/50;
+  }
+
+  .bg-grid {
+    background-image:
+      linear-gradient(to right, hsl(214 32% 91% / 0.5) 1px, transparent 1px),
+      linear-gradient(to bottom, hsl(214 32% 91% / 0.5) 1px, transparent 1px);
+    background-size: 56px 56px;
+  }
+}

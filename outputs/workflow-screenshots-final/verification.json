@@ -1,0 +1,65 @@
+{
+  "base": "http://127.0.0.1:3002",
+  "generatedAt": "2026-07-07T11:40:54.522Z",
+  "shots": [
+    {
+      "file": "D:\\Landingpage\\outputs\\workflow-screenshots-final\\01-landing.png",
+      "url": "http://127.0.0.1:3002/",
+      "height": 5820,
+      "font": "__Be_Vietnam_Pro_83907a, __Be_Vietnam_Pro_Fallback_83907a, system-ui, sans-serif"
+    },
+    {
+      "file": "D:\\Landingpage\\outputs\\workflow-screenshots-final\\02-public-registration.png",
+      "url": "http://127.0.0.1:3002/dang-ky",
+      "height": 1000,
+      "font": "__Be_Vietnam_Pro_83907a, __Be_Vietnam_Pro_Fallback_83907a, system-ui, sans-serif"
+    },
+    {
+      "file": "D:\\Landingpage\\outputs\\workflow-screenshots-final\\03-staff-login.png",
+      "url": "http://127.0.0.1:3002/nhan-vien",
+      "height": 1000,
+      "font": "__Be_Vietnam_Pro_83907a, __Be_Vietnam_Pro_Fallback_83907a, system-ui, sans-serif"
+    },
+    {
+      "file": "D:\\Landingpage\\outputs\\workflow-screenshots-final\\04-admin-dashboard.png",
+      "url": "http://127.0.0.1:3002/admin"
+    },
+    {
+      "file": "D:\\Landingpage\\outputs\\workflow-screenshots-final\\05-provider-status.png",
+      "url": "http://127.0.0.1:3002/admin/providers",
+      "height": 1000,
+      "font": "__Be_Vietnam_Pro_83907a, __Be_Vietnam_Pro_Fallback_83907a, system-ui, sans-serif"
+    },
+    {
+      "file": "D:\\Landingpage\\outputs\\workflow-screenshots-final\\06-admin-settings.png",
+      "url": "http://127.0.0.1:3002/admin/settings",
+      "height": 1000,
+      "font": "__Be_Vietnam_Pro_83907a, __Be_Vietnam_Pro_Fallback_83907a, system-ui, sans-serif"
+    },
+    {
+      "file": "D:\\Landingpage\\outputs\\workflow-screenshots-final\\07-intake-pipeline.png",
+      "url": "http://127.0.0.1:3002/intake",
+      "height": 1177,
+      "font": "__Be_Vietnam_Pro_83907a, __Be_Vietnam_Pro_Fallback_83907a, system-ui, sans-serif"
+    },
+    {
+      "file": "D:\\Landingpage\\outputs\\workflow-screenshots-final\\08-case-detail-workflow.png",
+      "url": "http://127.0.0.1:3002/cases/case_mr7w4ypfjn92pkxv",
+      "height": 1000,
+      "font": "__Be_Vietnam_Pro_83907a, __Be_Vietnam_Pro_Fallback_83907a, system-ui, sans-serif"
+    },
+    {
+      "file": "D:\\Landingpage\\outputs\\workflow-screenshots-final\\09-lawyer-workspace.png",
+      "url": "http://127.0.0.1:3002/lawyer",
+      "height": 1000,
+      "font": "__Be_Vietnam_Pro_83907a, __Be_Vietnam_Pro_Fallback_83907a, system-ui, sans-serif"
+    },
+    {
+      "file": "D:\\Landingpage\\outputs\\workflow-screenshots-final\\10-audit-log.png",
+      "url": "http://127.0.0.1:3002/admin/audit",
+      "height": 4160,
+      "font": "__Be_Vietnam_Pro_83907a, __Be_Vietnam_Pro_Fallback_83907a, system-ui, sans-serif"
+    }
+  ],
+  "problems": []
+}

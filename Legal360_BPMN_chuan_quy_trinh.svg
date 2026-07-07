@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="2100" height="1010" viewBox="0 0 2100 1010">
+<defs><style>
+.title{font:700 32px Arial,sans-serif;fill:#0f172a}.sub{font:400 16px Arial,sans-serif;fill:#475569}.lane-label{font:700 16px Arial,sans-serif;fill:#0f172a}.task{font:700 14px Arial,sans-serif;fill:#0f172a}.txt{font:400 12.5px Arial,sans-serif;fill:#334155}.stat{font:700 10px Arial,sans-serif;fill:#14532d}.flow{fill:none;stroke:#475569;stroke-width:2;marker-end:url(#arr)}.flowNo{fill:none;stroke:#dc2626;stroke-width:2;marker-end:url(#arrNo)}.flowYes{fill:none;stroke:#16a34a;stroke-width:2;marker-end:url(#arrYes)}.label{font:700 11px Arial,sans-serif;fill:#334155}.lane{fill:#f8fafc;stroke:#dbe3ef;stroke-width:1}.laneAlt{fill:#fff;stroke:#dbe3ef;stroke-width:1}
+</style><marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0 0 L10 5 L0 10z" fill="#475569"/></marker><marker id="arrYes" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0 0 L10 5 L0 10z" fill="#16a34a"/></marker><marker id="arrNo" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0 0 L10 5 L0 10z" fill="#dc2626"/></marker></defs>
+<rect width="2100" height="1010" fill="#ffffff"/>
+<text x="60" y="45" class="title">BPMN Legal360 - Enterprise Legal Survey Workflow</text>
+<text x="60" y="72" class="sub">Standard BPMN symbols: start/end event, user task, service task, exclusive gateway, sequence flow. Color shows implementation status in code.</text>
+<rect x="55" y="92" width="1990" height="112" class="lane"/>
+<text x="72" y="118" class="lane-label">Khach hang</text>
+<rect x="55" y="217" width="1990" height="112" class="laneAlt"/>
+<text x="72" y="243" class="lane-label">He thong / Database</text>
+<rect x="55" y="342" width="1990" height="112" class="lane"/>
+<text x="72" y="368" class="lane-label">Intake / Sales / Legal Ops</text>
+<rect x="55" y="467" width="1990" height="112" class="laneAlt"/>
+<text x="72" y="493" class="lane-label">Staff / Ho so</text>
+<rect x="55" y="592" width="1990" height="112" class="lane"/>
+<text x="72" y="618" class="lane-label">OCR / AI</text>
+<rect x="55" y="717" width="1990" height="112" class="laneAlt"/>
+<text x="72" y="743" class="lane-label">Luat su / Reviewer</text>
+<rect x="55" y="842" width="1990" height="112" class="lane"/>
+<text x="72" y="868" class="lane-label">CSKH / Follow-up</text>
+<path d="M270 168.0 L315 167.0" class="flow"/>
+<path d="M495 167.0 L540 167.0" class="flow"/>
+<path d="M645.0 206 L650.0 250" class="flow"/>
+<path d="M760 290.0 L815 167.0" class="flow"/>
+<path d="M905.0 206 L905.0 378" class="flow"/>
+<path d="M995 416.0 L1035 416.0" class="flow"/>
+<path d="M1215 416.0 L1265 418.0" class="flow"/>
+<path d="M1297.0 450 L1296.0 475" class="flowNo"/>
+<text x="1296.5" y="456.5" class="label">No</text>
+<path d="M1329 418.0 L1390 416.0" class="flowYes"/>
+<text x="1359.5" y="411.0" class="label">Yes</text>
+<path d="M1485.0 378 L1485.0 206" class="flow"/>
+<path d="M1485.0 206 L1495.0 250" class="flow"/>
+<path d="M1600 290.0 L1640 167.0" class="flow"/>
+<path d="M1735.0 206 L1735.0 250" class="flow"/>
+<path d="M1640 290.0 C1695 414.0, 915 414.0, 970 538.0" class="flow"/>
+<path d="M970 538.0 L1035 538.0" class="flow"/>
+<path d="M1067.0 570 L1020.0 585" class="flowNo"/>
+<text x="1043.5" y="571.5" class="label">No</text>
+<path d="M1110 617.0 L1640 167.0" class="flow"/>
+<text x="1375.0" y="386.0" class="label">Bo sung</text>
+<path d="M1099 538.0 L1190 538.0" class="flowYes"/>
+<text x="1144.5" y="532.0" class="label">Yes</text>
+<path d="M1190 538.0 C1245 600.5, 705 600.5, 760 663.0" class="flow"/>
+<path d="M760 663.0 L805 663.0" class="flow"/>
+<path d="M980 663.0 L1025 663.0" class="flow"/>
+<path d="M1230 663.0 L1285 666.0" class="flow"/>
+<path d="M1353 666.0 L1420 663.0" class="flowNo"/>
+<text x="1386.5" y="658.5" class="label">No</text>
+<path d="M1420 663.0 C1475 728.0, 755 728.0, 810 793.0" class="flow"/>
+<path d="M1285 666.0 C1340 729.5, 755 729.5, 810 793.0" class="flowYes"/>
+<text x="1047.5" y="723.5" class="label">Yes</text>
+<path d="M810 793.0 L860 793.0" class="flow"/>
+<path d="M1070 793.0 L1135 793.0" class="flow"/>
+<path d="M1170.0 828 L1210.0 840" class="flowNo"/>
+<text x="1190.0" y="828.0" class="label">No</text>
+<path d="M1210.0 840 C1265.0 744.5, 965.0 744.5, 1020.0 649" class="flow"/>
+<text x="1115.0" y="738.5" class="label">Bo sung</text>
+<path d="M1205 793.0 L1280 793.0" class="flowYes"/>
+<text x="1242.5" y="787.0" class="label">Yes</text>
+<path d="M1480 793.0 L1530 793.0" class="flow"/>
+<path d="M1530 793.0 L1480 917.0" class="flow"/>
+<path d="M1480 917.0 L1520 917.0" class="flow"/>
+<path d="M1700 917.0 L1740 917.0" class="flow"/>
+<path d="M1890 917.0 L1935 917.0" class="flow"/>
+<circle cx="250.0" cy="168.0" r="20.0" fill="#ecfdf5" stroke="#22c55e" stroke-width="3"/><text x="222" y="210" class="txt">Bat dau</text>
+<rect x="315" y="128" width="180" height="78" rx="10" fill="#ffffff" stroke="#22c55e" stroke-width="2"/>
+<text x="329" y="152" class="task">Truy cap landing page</text>
+<text x="329" y="169" class="txt">va bam dang ky</text>
+<rect x="325" y="184" width="160" height="16" rx="8" fill="#dcfce7" stroke="#22c55e" stroke-width="1"/><text x="405.0" y="196" text-anchor="middle" class="stat">CODE DONE</text>
+<rect x="540" y="128" width="210" height="78" rx="10" fill="#ffffff" stroke="#22c55e" stroke-width="2"/>
+<text x="554" y="152" class="task">Dien form intake 3 buoc</text>
+<text x="554" y="169" class="txt">Doanh nghiep - pham vi -</text>
+<text x="554" y="186" class="txt">lien he</text>
+<rect x="550" y="184" width="190" height="16" rx="8" fill="#dcfce7" stroke="#22c55e" stroke-width="1"/><text x="645.0" y="196" text-anchor="middle" class="stat">CODE DONE</text>
+<rect x="540" y="250" width="220" height="80" rx="10" fill="#eff6ff" stroke="#22c55e" stroke-width="2"/>
+<text x="554" y="274" class="task">Tao lead + survey request</text>
+<text x="554" y="291" class="txt">contact + organization +</text>
+<text x="554" y="308" class="txt">ho so nhap</text>
+<rect x="550" y="308" width="200" height="16" rx="8" fill="#dcfce7" stroke="#22c55e" stroke-width="1"/><text x="650.0" y="320" text-anchor="middle" class="stat">CODE DONE</text>
+<rect x="815" y="128" width="180" height="78" rx="10" fill="#ffffff" stroke="#eab308" stroke-width="2"/>
+<text x="829" y="152" class="task">Xac thuc OTP email</text>
+<rect x="825" y="184" width="160" height="16" rx="8" fill="#fef9c3" stroke="#eab308" stroke-width="1"/><text x="905.0" y="196" text-anchor="middle" class="stat">CODED - MOCK/PARTIAL</text>
+<rect x="815" y="378" width="180" height="76" rx="10" fill="#ffffff" stroke="#22c55e" stroke-width="2"/>
+<text x="829" y="402" class="task">Intake nhan lead</text>
+<text x="829" y="419" class="txt">tren dashboard</text>
+<rect x="825" y="432" width="160" height="16" rx="8" fill="#dcfce7" stroke="#22c55e" stroke-width="1"/><text x="905.0" y="444" text-anchor="middle" class="stat">CODE DONE</text>
+<rect x="1035" y="378" width="180" height="76" rx="10" fill="#ffffff" stroke="#22c55e" stroke-width="2"/>
+<text x="1049" y="402" class="task">Kiem tra thong tin</text>
+<text x="1049" y="419" class="txt">khach hang</text>
+<rect x="1045" y="432" width="160" height="16" rx="8" fill="#dcfce7" stroke="#22c55e" stroke-width="1"/><text x="1125.0" y="444" text-anchor="middle" class="stat">CODE DONE</text>
+<polygon points="1297.0,386 1329,418.0 1297.0,450 1265,418.0" fill="#fff" stroke="#64748b" stroke-width="2"/>
+<text x="1297.0" y="412.0" text-anchor="middle" class="task">Conflict</text>
+<text x="1297.0" y="427.0" text-anchor="middle" class="task">clear?</text>
+<circle cx="1296.0" cy="504.0" r="29.0" fill="#fff1f2" stroke="#ef4444" stroke-width="4"/>
+<text x="1296.0" y="551" text-anchor="middle" class="txt">Dung / cho</text>
+<text x="1296.0" y="565" text-anchor="middle" class="txt">partner duyet</text>
+<rect x="1390" y="378" width="190" height="76" rx="10" fill="#ffffff" stroke="#22c55e" stroke-width="2"/>
+<text x="1404" y="402" class="task">Gui bao phi</text>
+<text x="1404" y="419" class="txt">Tao hop dong</text>
+<rect x="1400" y="432" width="170" height="16" rx="8" fill="#dcfce7" stroke="#22c55e" stroke-width="1"/><text x="1485.0" y="444" text-anchor="middle" class="stat">CODE DONE</text>
+<rect x="1390" y="128" width="190" height="78" rx="10" fill="#ffffff" stroke="#22c55e" stroke-width="2"/>
+<text x="1404" y="152" class="task">Ky hop dong</text>
+<text x="1404" y="169" class="txt">va thanh toan</text>
+<rect x="1400" y="184" width="170" height="16" rx="8" fill="#dcfce7" stroke="#22c55e" stroke-width="1"/><text x="1485.0" y="196" text-anchor="middle" class="stat">CODE DONE</text>
+<rect x="1390" y="250" width="210" height="80" rx="10" fill="#eff6ff" stroke="#22c55e" stroke-width="2"/>
+<text x="1404" y="274" class="task">Mo ho so chinh thuc</text>
+<text x="1404" y="291" class="txt">Sinh ma + tao Drive</text>
+<rect x="1400" y="308" width="190" height="16" rx="8" fill="#dcfce7" stroke="#22c55e" stroke-width="1"/><text x="1495.0" y="320" text-anchor="middle" class="stat">CODE DONE</text>
+<rect x="1640" y="128" width="190" height="78" rx="10" fill="#ffffff" stroke="#22c55e" stroke-width="2"/>
+<text x="1654" y="152" class="task">Upload tai lieu</text>
+<text x="1654" y="169" class="txt">theo checklist</text>
+<rect x="1650" y="184" width="170" height="16" rx="8" fill="#dcfce7" stroke="#22c55e" stroke-width="1"/><text x="1735.0" y="196" text-anchor="middle" class="stat">CODE DONE</text>
+<rect x="1640" y="250" width="190" height="80" rx="10" fill="#eff6ff" stroke="#22c55e" stroke-width="2"/>
+<text x="1654" y="274" class="task">Luu metadata</text>
+<text x="1654" y="291" class="txt">file, trang thai, audit</text>
+<rect x="1650" y="308" width="170" height="16" rx="8" fill="#dcfce7" stroke="#22c55e" stroke-width="1"/><text x="1735.0" y="320" text-anchor="middle" class="stat">CODE DONE</text>
+<rect x="780" y="500" width="190" height="76" rx="10" fill="#ffffff" stroke="#22c55e" stroke-width="2"/>
+<text x="794" y="524" class="task">Kiem tra checklist</text>
+<text x="794" y="541" class="txt">tai lieu</text>
+<rect x="790" y="554" width="170" height="16" rx="8" fill="#dcfce7" stroke="#22c55e" stroke-width="1"/><text x="875.0" y="566" text-anchor="middle" class="stat">CODE DONE</text>
+<polygon points="1067.0,506 1099,538.0 1067.0,570 1035,538.0" fill="#fff" stroke="#64748b" stroke-width="2"/>
+<text x="1067.0" y="532.0" text-anchor="middle" class="task">Tai lieu</text>
+<text x="1067.0" y="547.0" text-anchor="middle" class="task">du?</text>
+<rect x="930" y="585" width="180" height="64" rx="10" fill="#ffffff" stroke="#22c55e" stroke-width="2"/>
+<text x="944" y="609" class="task">Yeu cau bo sung</text>
+<text x="944" y="626" class="txt">tai lieu</text>
+<rect x="940" y="627" width="160" height="16" rx="8" fill="#dcfce7" stroke="#22c55e" stroke-width="1"/><text x="1020.0" y="639" text-anchor="middle" class="stat">CODE DONE</text>
+<rect x="1190" y="500" width="180" height="76" rx="10" fill="#ffffff" stroke="#22c55e" stroke-width="2"/>
+<text x="1204" y="524" class="task">Chuyen xu ly</text>
+<text x="1204" y="541" class="txt">OCR / AI</text>
+<rect x="1200" y="554" width="160" height="16" rx="8" fill="#dcfce7" stroke="#22c55e" stroke-width="1"/><text x="1280.0" y="566" text-anchor="middle" class="stat">CODE DONE</text>
+<rect x="600" y="628" width="160" height="70" rx="10" fill="#eff6ff" stroke="#22c55e" stroke-width="2"/>
+<text x="614" y="652" class="task">OCR tai lieu</text>
+<rect x="610" y="676" width="140" height="16" rx="8" fill="#dcfce7" stroke="#22c55e" stroke-width="1"/><text x="680.0" y="688" text-anchor="middle" class="stat">CODE DONE</text>
+<rect x="805" y="628" width="175" height="70" rx="10" fill="#eff6ff" stroke="#eab308" stroke-width="2"/>
+<text x="819" y="652" class="task">AI phan loai</text>
+<text x="819" y="669" class="txt">tai lieu</text>
+<rect x="815" y="676" width="155" height="16" rx="8" fill="#fef9c3" stroke="#eab308" stroke-width="1"/><text x="892.5" y="688" text-anchor="middle" class="stat">CODED - MOCK/PARTIAL</text>
+<rect x="1025" y="628" width="205" height="70" rx="10" fill="#eff6ff" stroke="#eab308" stroke-width="2"/>
+<text x="1039" y="652" class="task">AI phan tich rui ro</text>
+<text x="1039" y="669" class="txt">tao finding draft</text>
+<rect x="1035" y="676" width="185" height="16" rx="8" fill="#fef9c3" stroke="#eab308" stroke-width="1"/><text x="1127.5" y="688" text-anchor="middle" class="stat">CODED - MOCK/PARTIAL</text>
+<polygon points="1319.0,632 1353,666.0 1319.0,700 1285,666.0" fill="#fff" stroke="#64748b" stroke-width="2"/>
+<text x="1319.0" y="660.0" text-anchor="middle" class="task">Co</text>
+<text x="1319.0" y="675.0" text-anchor="middle" class="task">evidence?</text>
+<rect x="1420" y="628" width="190" height="70" rx="10" fill="#eff6ff" stroke="#22c55e" stroke-width="2"/>
+<text x="1434" y="652" class="task">Gan co kiem tra</text>
+<text x="1434" y="669" class="txt">thieu evidence</text>
+<rect x="1430" y="676" width="170" height="16" rx="8" fill="#dcfce7" stroke="#22c55e" stroke-width="1"/><text x="1515.0" y="688" text-anchor="middle" class="stat">CODE DONE</text>
+<rect x="600" y="755" width="210" height="76" rx="10" fill="#ffffff" stroke="#22c55e" stroke-width="2"/>
+<text x="614" y="779" class="task">Luat su review</text>
+<text x="614" y="796" class="txt">tai lieu goc + AI draft</text>
+<rect x="610" y="809" width="190" height="16" rx="8" fill="#dcfce7" stroke="#22c55e" stroke-width="1"/><text x="705.0" y="821" text-anchor="middle" class="stat">CODE DONE</text>
+<rect x="860" y="755" width="210" height="76" rx="10" fill="#ffffff" stroke="#22c55e" stroke-width="2"/>
+<text x="874" y="779" class="task">Accept / Edit / Reject</text>
+<text x="874" y="796" class="txt">tung finding</text>
+<rect x="870" y="809" width="190" height="16" rx="8" fill="#dcfce7" stroke="#22c55e" stroke-width="1"/><text x="965.0" y="821" text-anchor="middle" class="stat">CODE DONE</text>
+<polygon points="1170.0,758 1205,793.0 1170.0,828 1135,793.0" fill="#fff" stroke="#64748b" stroke-width="2"/>
+<text x="1170.0" y="787.0" text-anchor="middle" class="task">Du dieu kien</text>
+<text x="1170.0" y="802.0" text-anchor="middle" class="task">final?</text>
+<rect x="1115" y="840" width="190" height="60" rx="10" fill="#ffffff" stroke="#22c55e" stroke-width="2"/>
+<text x="1129" y="864" class="task">Chinh sua</text>
+<text x="1129" y="881" class="txt">hoac bo sung</text>
+<rect x="1125" y="878" width="170" height="16" rx="8" fill="#dcfce7" stroke="#22c55e" stroke-width="1"/><text x="1210.0" y="890" text-anchor="middle" class="stat">CODE DONE</text>
+<rect x="1280" y="755" width="200" height="76" rx="10" fill="#eff6ff" stroke="#22c55e" stroke-width="2"/>
+<text x="1294" y="779" class="task">Tao bao cao nhap</text>
+<rect x="1290" y="809" width="180" height="16" rx="8" fill="#dcfce7" stroke="#22c55e" stroke-width="1"/><text x="1380.0" y="821" text-anchor="middle" class="stat">CODE DONE</text>
+<rect x="1530" y="755" width="210" height="76" rx="10" fill="#eff6ff" stroke="#22c55e" stroke-width="2"/>
+<text x="1544" y="779" class="task">Duyet final</text>
+<text x="1544" y="796" class="txt">khoa version + xuat file</text>
+<rect x="1540" y="809" width="190" height="16" rx="8" fill="#dcfce7" stroke="#22c55e" stroke-width="1"/><text x="1635.0" y="821" text-anchor="middle" class="stat">CODE DONE</text>
+<rect x="1320" y="885" width="160" height="64" rx="10" fill="#ffffff" stroke="#22c55e" stroke-width="2"/>
+<text x="1334" y="909" class="task">Ban giao</text>
+<text x="1334" y="926" class="txt">bao cao</text>
+<rect x="1330" y="927" width="140" height="16" rx="8" fill="#dcfce7" stroke="#22c55e" stroke-width="1"/><text x="1400.0" y="939" text-anchor="middle" class="stat">CODE DONE</text>
+<rect x="1520" y="885" width="180" height="64" rx="10" fill="#ffffff" stroke="#22c55e" stroke-width="2"/>
+<text x="1534" y="909" class="task">Roadmap</text>
+<text x="1534" y="926" class="txt">30-90 ngay</text>
+<rect x="1530" y="927" width="160" height="16" rx="8" fill="#dcfce7" stroke="#22c55e" stroke-width="1"/><text x="1610.0" y="939" text-anchor="middle" class="stat">CODE DONE</text>
+<rect x="1740" y="885" width="150" height="64" rx="10" fill="#ffffff" stroke="#22c55e" stroke-width="2"/>
+<text x="1754" y="909" class="task">De xuat</text>
+<text x="1754" y="926" class="txt">retainer</text>
+<rect x="1750" y="927" width="130" height="16" rx="8" fill="#dcfce7" stroke="#22c55e" stroke-width="1"/><text x="1815.0" y="939" text-anchor="middle" class="stat">CODE DONE</text>
+<circle cx="1955.0" cy="917.0" r="20.0" fill="#fff1f2" stroke="#ef4444" stroke-width="4"/>
+<text x="1955.0" y="955" text-anchor="middle" class="txt">Ket thuc</text>
+<rect x="60" y="958" width="1980" height="38" fill="#fff" stroke="#e2e8f0"/>
+<rect x="90" y="970" width="18" height="14" fill="#dcfce7" stroke="#64748b"/><text x="118" y="982" class="txt">Code done</text>
+<rect x="230" y="970" width="18" height="14" fill="#fef9c3" stroke="#64748b"/><text x="258" y="982" class="txt">Coded but provider mock/partial</text>
+<rect x="520" y="970" width="18" height="14" fill="#fee2e2" stroke="#64748b"/><text x="548" y="982" class="txt">Not done</text>
+<text x="720" y="982" class="txt">Main remaining gap: Survey plan / digital minutes UI. Providers currently mock: AI and Email. Drive is Google-configured, OCR is local.</text></svg>
