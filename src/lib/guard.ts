@@ -32,3 +32,13 @@ export function requireSection(section: AppSection): Viewer {
   }
   return viewer;
 }
+
+/** Cổng khách hàng là vùng tách riêng: tài khoản nội bộ không tự nhảy vào admin tại đây. */
+export function requireCustomerPortal(returnTo = "/portal"): Viewer {
+  const viewer = getViewer();
+  if (!viewer) redirect(`/login?next=${encodeURIComponent(returnTo)}`);
+  if (viewer.role !== "customer") {
+    redirect(`/login?next=${encodeURIComponent(returnTo)}&error=customer_portal_required`);
+  }
+  return viewer;
+}

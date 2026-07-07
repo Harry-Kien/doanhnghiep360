@@ -18,41 +18,41 @@ const MAX_LIVE_CHALLENGES = 5;
 function otpEmail(code: string): { subject: string; text: string; html: string } {
   const spacedCode = code.split("").join(" ");
   return {
-    subject: "Legal360 - Ma xac thuc yeu cau khao sat",
+    subject: "Mã xác thực - Khảo sát pháp lý 360° | Luật Ngọc Sơn",
     text: [
-      "Legal360 - Luat Ngoc Son",
+      "Luật Ngọc Sơn - Khảo sát pháp lý doanh nghiệp 360°",
       "",
-      `Ma xac thuc cua ban la: ${code}`,
-      "Ma co hieu luc trong 10 phut. Vui long khong chuyen tiep ma nay cho nguoi khac.",
+      `Mã xác thực của bạn là: ${code}`,
+      "Mã có hiệu lực trong 10 phút. Vui lòng không chuyển tiếp mã này cho người khác.",
       "",
-      "Neu ban khong thuc hien yeu cau nay, co the bo qua email.",
-      "Website: https://luatngocson.com | Dien thoai: 097 2290 595",
+      "Nếu bạn không thực hiện yêu cầu này, bạn có thể bỏ qua email.",
+      "Website: https://luatngocson.com | Điện thoại: 097 2290 595",
     ].join("\n"),
     html: `
-      <div style="margin:0;padding:0;background:#f6f8fb;font-family:Arial,Helvetica,sans-serif;color:#0f172a">
+      <div lang="vi" style="margin:0;padding:0;background:#f6f8fb;font-family:Arial,Helvetica,sans-serif;color:#0f172a">
         <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background:#f6f8fb;padding:24px 0">
           <tr>
             <td align="center">
               <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="max-width:560px;background:#ffffff;border:1px solid #e2e8f0;border-radius:12px;overflow:hidden">
                 <tr>
                   <td style="padding:22px 26px;background:#0b1b33;color:#ffffff">
-                    <div style="font-size:18px;font-weight:700">Legal360 - Luat Ngoc Son</div>
-                    <div style="margin-top:4px;font-size:13px;color:#cbd5e1">Xac thuc phieu yeu cau khao sat phap ly 360</div>
+                    <div style="font-size:18px;font-weight:700">Luật Ngọc Sơn</div>
+                    <div style="margin-top:4px;font-size:13px;color:#cbd5e1">Xác thực phiếu yêu cầu khảo sát pháp lý 360°</div>
                   </td>
                 </tr>
                 <tr>
                   <td style="padding:28px 26px">
-                    <p style="margin:0 0 14px;font-size:15px;line-height:1.6">Ma xac thuc cua ban la:</p>
+                    <p style="margin:0 0 14px;font-size:15px;line-height:1.6">Mã xác thực của bạn là:</p>
                     <div style="padding:16px 18px;border:1px solid #dbe4f0;border-radius:10px;background:#f8fafc;text-align:center">
                       <div style="font-size:34px;letter-spacing:8px;font-weight:800;color:#0b1b33">${spacedCode}</div>
                     </div>
-                    <p style="margin:18px 0 0;font-size:14px;line-height:1.6;color:#475569">Ma co hieu luc trong 10 phut. Vui long khong chuyen tiep ma nay cho nguoi khac.</p>
-                    <p style="margin:14px 0 0;font-size:13px;line-height:1.6;color:#64748b">Neu ban khong thuc hien yeu cau nay, co the bo qua email.</p>
+                    <p style="margin:18px 0 0;font-size:14px;line-height:1.6;color:#475569">Mã có hiệu lực trong 10 phút. Vui lòng không chuyển tiếp mã này cho người khác.</p>
+                    <p style="margin:14px 0 0;font-size:13px;line-height:1.6;color:#64748b">Nếu bạn không thực hiện yêu cầu này, bạn có thể bỏ qua email.</p>
                   </td>
                 </tr>
                 <tr>
                   <td style="padding:16px 26px;border-top:1px solid #e2e8f0;font-size:12px;line-height:1.6;color:#64748b">
-                    Luat Ngoc Son - luatngocson.com - 097 2290 595
+                    Luật Ngọc Sơn - luatngocson.com - 097 2290 595
                   </td>
                 </tr>
               </table>

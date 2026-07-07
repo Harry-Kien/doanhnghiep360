@@ -1,4 +1,3 @@
-import { redirect } from "next/navigation";
 import { AlertTriangle, FileText, Lock, Download, UploadCloud } from "lucide-react";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -12,7 +11,7 @@ import { DocumentUploadBox } from "@/components/app/document-upload-box";
 import { DocumentDeleteButton } from "@/components/app/document-delete-button";
 import { CommercialPortal } from "@/components/app/commercial-portal";
 import { SURVEY_REQUEST_FORM_CATEGORY, isCustomerUploadableKey } from "@/shared/constants";
-import { requireAuth } from "@/lib/guard";
+import { requireCustomerPortal } from "@/lib/guard";
 import { getCaseDetail } from "@/server/services/cases";
 import { listProposals, listContracts, listPayments } from "@/server/services/commercial";
 import { getReportView, listRoadmap } from "@/server/services/report-build";
@@ -24,10 +23,7 @@ import { formatDateTime } from "@/lib/utils";
 export const metadata = { title: "Cổng khách hàng — Legal360" };
 
 export default function PortalPage() {
-  const viewer = requireAuth("/portal");
-  if (viewer.role !== "customer") {
-    redirect(viewer.role === "lawyer" || viewer.role === "reviewer" || viewer.role === "staff" ? "/lawyer" : "/admin");
-  }
+  const viewer = requireCustomerPortal("/portal");
 
   const db = getDb();
   const myCases = db.cases

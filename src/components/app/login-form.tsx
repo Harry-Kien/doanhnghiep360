@@ -6,16 +6,7 @@ import { Loader2, LogIn, ShieldCheck } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { FieldError, Input, Label } from "@/components/ui/input";
 import type { Role } from "@/shared/roles";
-
-const HOME_BY_ROLE: Record<Role, string> = {
-  admin: "/admin",
-  intake: "/intake",
-  lawyer: "/lawyer",
-  reviewer: "/lawyer",
-  staff: "/lawyer",
-  accountant: "/ke-toan",
-  customer: "/portal",
-};
+import { targetForRole } from "@/shared/navigation";
 
 const OAUTH_ERROR_MESSAGES: Record<string, string> = {
   not_registered: "Email Google này chưa đăng ký khảo sát. Vui lòng đăng ký trước hoặc dùng email đã đăng ký.",
@@ -23,6 +14,7 @@ const OAUTH_ERROR_MESSAGES: Record<string, string> = {
   google_state: "Phiên đăng nhập Google đã hết hạn. Vui lòng thử lại.",
   google_email: "Không lấy được email đã xác thực từ Google. Vui lòng thử lại.",
   google_failed: "Đăng nhập Google thất bại. Vui lòng thử lại hoặc dùng mã OTP.",
+  customer_portal_required: "Cổng khách hàng chỉ dành cho tài khoản khách. Vui lòng đăng nhập bằng email khách hàng và mã OTP.",
 };
 
 export function LoginForm({
@@ -47,8 +39,7 @@ export function LoginForm({
   const [otpInfo, setOtpInfo] = React.useState<string | null>(null);
 
   function go(role: Role) {
-    const target = next && next.startsWith("/") && !next.startsWith("//") ? next : HOME_BY_ROLE[role];
-    window.location.assign(target);
+    window.location.assign(targetForRole(role, next));
   }
 
   async function requestOtp(event: React.FormEvent) {

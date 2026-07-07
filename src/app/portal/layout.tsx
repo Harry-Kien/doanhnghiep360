@@ -1,11 +1,11 @@
 ﻿import Link from "next/link";
 import { Scale } from "lucide-react";
 import { AccountMenu } from "@/components/app/account-menu";
-import { requireAuth } from "@/lib/guard";
+import { requireCustomerPortal } from "@/lib/guard";
 import { getCurrentUserPublic } from "@/lib/session";
 
 export default function PortalLayout({ children }: { children: React.ReactNode }) {
-  const viewer = requireAuth("/portal");
+  const viewer = requireCustomerPortal("/portal");
   const user = getCurrentUserPublic();
   return (
     <div className="min-h-screen bg-secondary/30">
