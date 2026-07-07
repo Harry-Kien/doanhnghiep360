@@ -1,0 +1,12 @@
+.next
+node_modules
+.data
+.codex-local
+.vercel
+.env
+.env*.local
+coverage
+test-results
+playwright-report
+work
+outputs
