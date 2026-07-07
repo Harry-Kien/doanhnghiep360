@@ -2,7 +2,6 @@
 
 import * as React from "react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import { Loader2, LogIn, ShieldCheck } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { FieldError, Input, Label } from "@/components/ui/input";
@@ -37,7 +36,6 @@ export function LoginForm({
   errorCode?: string;
   variant?: "customer" | "staff";
 }) {
-  const router = useRouter();
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
   const [pending, setPending] = React.useState<string | null>(null);
@@ -49,8 +47,8 @@ export function LoginForm({
   const [otpInfo, setOtpInfo] = React.useState<string | null>(null);
 
   function go(role: Role) {
-    router.push(next || HOME_BY_ROLE[role]);
-    router.refresh();
+    const target = next && next.startsWith("/") && !next.startsWith("//") ? next : HOME_BY_ROLE[role];
+    window.location.assign(target);
   }
 
   async function requestOtp(event: React.FormEvent) {
