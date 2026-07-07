@@ -185,6 +185,13 @@ export function recordPayment(caseId: string, input: PaymentInput, actor: Actor)
   const db = getDb();
   const theCase = db.cases.find((c) => c.id === caseId);
   if (!theCase) throw new Error("NOT_FOUND");
+  if (theCase.status === "cancelled" || theCase.status === "completed") {
+    throw new CommercialGuardError("Hồ sơ đã đóng, không thể ghi nhận thanh toán mới.");
+  }
+  const hasSignedContract = db.contracts.some((c) => c.caseId === caseId && c.status === "signed");
+  if (!hasSignedContract && theCase.status !== "payment_pending") {
+    throw new CommercialGuardError("Cần có hợp đồng đã ký trước khi ghi nhận thanh toán.");
+  }
 
   const now = new Date().toISOString();
   const payment: Payment = {

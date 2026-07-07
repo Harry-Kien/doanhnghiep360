@@ -82,6 +82,17 @@ describe("Phase 2 — commercial flow", () => {
     recordConflictCheck(caseId, { result: "clear" }, actor);
     expect(() => createContract(caseId, { templateVersion: "v1" }, actor)).toThrow(CommercialGuardError);
   });
+
+  it("không ghi nhận thanh toán khi hợp đồng chưa được ký", () => {
+    const { caseId } = createLeadFromSurvey(lead);
+    transitionCase(caseId, "lead_verified", actor);
+    recordConflictCheck(caseId, { result: "clear" }, actor);
+    const p = createProposal(caseId, { package: "pro", amount: 12_000_000, vatAmount: 960_000 }, actor);
+    sendProposal(caseId, p.id, actor);
+    createContract(caseId, { templateVersion: "HD-DV-PHAP-LY-v1" }, actor);
+
+    expect(() => recordPayment(caseId, { milestone: "deposit", amount: 6_000_000 }, actor)).toThrow(CommercialGuardError);
+  });
 });
 
 describe("Phase 2 — self-service của khách hàng (cổng khách)", () => {

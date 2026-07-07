@@ -250,7 +250,7 @@ export function CommercialPanel(props: Props) {
           ) : null}
           <p className="mb-3 text-sm">Đã thu: <span className="font-medium">{VND.format(totalPaid)}</span></p>
 
-          {(hasSignedContract || props.payments.length > 0 || props.status === "payment_pending") && canPayment ? (
+          {(hasSignedContract || props.status === "payment_pending") && canPayment ? (
             <div className="flex flex-wrap items-end gap-2">
               <div>
                 <Label className="mb-1 block">Đợt</Label>

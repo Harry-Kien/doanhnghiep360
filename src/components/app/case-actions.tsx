@@ -19,7 +19,6 @@ interface PrimaryAction {
 // Lưu ý: các bước thương mại (lead_verified → payment_pending) KHÔNG có nút generic ở đây —
 // chúng được thực hiện ở tab "Thương mại" để luôn tạo record (conflict/báo phí/hợp đồng/thanh toán).
 const PRIMARY: Partial<Record<CaseStatus, PrimaryAction>> = {
-  lead_new: { label: "Xác thực khách hàng", kind: "transition", toStatus: "lead_verified", icon: ArrowRight },
   payment_pending: { label: "Xác nhận thanh toán & mở hồ sơ", kind: "open", icon: FolderPlus },
   case_opened: { label: "Mở cổng upload tài liệu", kind: "transition", toStatus: "waiting_documents", icon: ArrowRight },
   waiting_documents: { label: "Đã nhận đủ tài liệu", kind: "transition", toStatus: "documents_received", icon: ArrowRight },
@@ -114,6 +113,12 @@ export function CaseActions({
         <div className="flex items-center gap-2 rounded-md border border-dashed bg-secondary/40 px-3 py-2 text-sm text-muted-foreground">
           <Briefcase className="size-4" />
           Bước thương mại — thực hiện ở tab <span className="font-medium text-foreground">“Thương mại”</span> (conflict check, báo phí, hợp đồng, thanh toán).
+        </div>
+      ) : null}
+      {status === "lead_new" ? (
+        <div className="flex items-center gap-2 rounded-md border border-dashed bg-secondary/40 px-3 py-2 text-sm text-muted-foreground">
+          <ShieldCheck className="size-4" />
+          Đang chờ khách hàng xác thực email bằng OTP. Sau khi xác thực, hồ sơ sẽ tự chuyển sang bước conflict check.
         </div>
       ) : null}
       <div className="flex flex-wrap gap-2">

@@ -1,7 +1,7 @@
 import { NextRequest } from "next/server";
 import { ZodError } from "zod";
 import { paymentSchema } from "@/shared/schemas";
-import { recordPayment } from "@/server/services/commercial";
+import { CommercialGuardError, recordPayment } from "@/server/services/commercial";
 import { getViewer } from "@/lib/session";
 import { ROLE_META, canAccessSection } from "@/shared/roles";
 import { ok, fail, failFromZod } from "@/lib/http";
@@ -25,6 +25,7 @@ export async function POST(req: NextRequest, { params }: { params: { id: string 
     return ok({ id: p.id, milestone: p.milestone, status: p.status }, 201);
   } catch (err) {
     if (err instanceof ZodError) return failFromZod(err);
+    if (err instanceof CommercialGuardError) return fail("STATE_TRANSITION_INVALID", err.message);
     if (err instanceof Error && err.message === "NOT_FOUND") return fail("NOT_FOUND", "Không tìm thấy hồ sơ.");
     return fail("INTERNAL_ERROR", "Không thể ghi nhận thanh toán.");
   }
