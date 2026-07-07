@@ -13,6 +13,13 @@ export interface EmailAdapter {
   send(msg: EmailMessage): Promise<{ ok: boolean; id: string }>;
 }
 
+function smtpFromAddress(): string | { name: string; address: string } {
+  const raw = (env.smtp.from || env.smtp.user).trim();
+  const match = raw.match(/<([^>]+)>/);
+  const address = (match?.[1] || raw || env.smtp.user).trim();
+  return { name: "Legal360 - Luat Ngoc Son", address };
+}
+
 class MockEmailAdapter implements EmailAdapter {
   readonly mode = "mock" as const;
   async send(msg: EmailMessage): Promise<{ ok: boolean; id: string }> {
@@ -33,11 +40,14 @@ class SmtpEmailAdapter implements EmailAdapter {
       auth: { user: env.smtp.user, pass: env.smtp.pass },
     });
     const info = await transport.sendMail({
-      from: env.smtp.from || env.smtp.user,
+      from: smtpFromAddress(),
       to: msg.to,
       subject: msg.subject,
       text: msg.text,
       html: msg.html,
+      headers: {
+        "X-Auto-Response-Suppress": "OOF, AutoReply",
+      },
     });
     return { ok: true, id: info.messageId };
   }

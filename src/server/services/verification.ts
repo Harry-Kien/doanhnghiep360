@@ -1,5 +1,5 @@
 ﻿// Xác thực khách hàng bằng OTP email. Mock ⇒ trả devCode để demo; SMTP ⇒ gửi thật.
-import { createHmac, randomInt } from "node:crypto";
+import { createHmac, randomInt, timingSafeEqual } from "node:crypto";
 import { getDb, commit } from "@/server/db";
 import { createId } from "@/lib/utils";
 import { appSecret } from "@/lib/auth";
@@ -15,8 +15,104 @@ const ISSUE_COOLDOWN_MS = 60 * 1000;
 /** Số challenge tối đa còn hiệu lực cho 1 hồ sơ (chống tạo vô hạn challenge để né giới hạn 5 lần thử). */
 const MAX_LIVE_CHALLENGES = 5;
 
+function otpEmail(code: string): { subject: string; text: string; html: string } {
+  const spacedCode = code.split("").join(" ");
+  return {
+    subject: "Legal360 - Ma xac thuc yeu cau khao sat",
+    text: [
+      "Legal360 - Luat Ngoc Son",
+      "",
+      `Ma xac thuc cua ban la: ${code}`,
+      "Ma co hieu luc trong 10 phut. Vui long khong chuyen tiep ma nay cho nguoi khac.",
+      "",
+      "Neu ban khong thuc hien yeu cau nay, co the bo qua email.",
+      "Website: https://luatngocson.com | Dien thoai: 097 2290 595",
+    ].join("\n"),
+    html: `
+      <div style="margin:0;padding:0;background:#f6f8fb;font-family:Arial,Helvetica,sans-serif;color:#0f172a">
+        <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background:#f6f8fb;padding:24px 0">
+          <tr>
+            <td align="center">
+              <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="max-width:560px;background:#ffffff;border:1px solid #e2e8f0;border-radius:12px;overflow:hidden">
+                <tr>
+                  <td style="padding:22px 26px;background:#0b1b33;color:#ffffff">
+                    <div style="font-size:18px;font-weight:700">Legal360 - Luat Ngoc Son</div>
+                    <div style="margin-top:4px;font-size:13px;color:#cbd5e1">Xac thuc phieu yeu cau khao sat phap ly 360</div>
+                  </td>
+                </tr>
+                <tr>
+                  <td style="padding:28px 26px">
+                    <p style="margin:0 0 14px;font-size:15px;line-height:1.6">Ma xac thuc cua ban la:</p>
+                    <div style="padding:16px 18px;border:1px solid #dbe4f0;border-radius:10px;background:#f8fafc;text-align:center">
+                      <div style="font-size:34px;letter-spacing:8px;font-weight:800;color:#0b1b33">${spacedCode}</div>
+                    </div>
+                    <p style="margin:18px 0 0;font-size:14px;line-height:1.6;color:#475569">Ma co hieu luc trong 10 phut. Vui long khong chuyen tiep ma nay cho nguoi khac.</p>
+                    <p style="margin:14px 0 0;font-size:13px;line-height:1.6;color:#64748b">Neu ban khong thuc hien yeu cau nay, co the bo qua email.</p>
+                  </td>
+                </tr>
+                <tr>
+                  <td style="padding:16px 26px;border-top:1px solid #e2e8f0;font-size:12px;line-height:1.6;color:#64748b">
+                    Luat Ngoc Son - luatngocson.com - 097 2290 595
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+        </table>
+      </div>
+    `,
+  };
+}
+
+function receivedEmail(): { subject: string; text: string; html: string } {
+  return {
+    subject: "Legal360 - Da tiep nhan phieu yeu cau",
+    text:
+      "Cam on ban. Legal360 da tiep nhan phieu yeu cau khao sat. Bo phan tiep nhan se kiem tra thong tin, thuc hien conflict check va lien he gui bao phi/hop dong trong thoi gian som nhat.",
+    html:
+      '<div style="font-family:Arial,Helvetica,sans-serif;color:#0f172a;line-height:1.6"><h2 style="margin:0 0 12px;color:#0b1b33">Legal360 da tiep nhan phieu yeu cau</h2><p>Cam on ban. Bo phan tiep nhan se kiem tra thong tin, thuc hien conflict check va lien he gui bao phi/hop dong trong thoi gian som nhat.</p><p style="font-size:13px;color:#64748b">Luat Ngoc Son - luatngocson.com - 097 2290 595</p></div>',
+  };
+}
+
 function hashCode(code: string): string {
   return createHmac("sha256", appSecret()).update(`otp:${code}`).digest("hex");
+}
+
+interface SignedOtpChallenge {
+  id: string;
+  caseId: string;
+  email: string;
+  codeHash: string;
+  expiresAt: string;
+  createdAt: string;
+}
+
+function sign(raw: string): string {
+  return createHmac("sha256", appSecret()).update(raw).digest("base64url");
+}
+
+function safeEqual(a: string, b: string): boolean {
+  const aa = Buffer.from(a);
+  const bb = Buffer.from(b);
+  return aa.length === bb.length && timingSafeEqual(aa, bb);
+}
+
+function challengeToken(challenge: SignedOtpChallenge): string {
+  const payload = Buffer.from(JSON.stringify(challenge), "utf8").toString("base64url");
+  return `${challenge.id}.${payload}.${sign(payload)}`;
+}
+
+function parseChallengeToken(value: string): SignedOtpChallenge | null {
+  const parts = value.split(".");
+  if (parts.length !== 3) return null;
+  const [id, payload, signature] = parts;
+  if (!id.startsWith("otp_") || !safeEqual(sign(payload), signature)) return null;
+  try {
+    const parsed = JSON.parse(Buffer.from(payload, "base64url").toString("utf8")) as SignedOtpChallenge;
+    return parsed.id === id ? parsed : null;
+  } catch {
+    return null;
+  }
 }
 
 export class OtpError extends Error {
@@ -73,16 +169,46 @@ export async function issueOtpForCase(caseId: string): Promise<OtpIssueResult> {
   const adapter = getEmailAdapter();
   await adapter.send({
     to: email,
-    subject: "Mã xác thực — Khảo sát Pháp lý 360° (Luật Ngọc Sơn)",
-    text: `Mã xác thực của bạn là: ${code} (hết hạn sau 10 phút).`,
-    html: `<p>Mã xác thực phiếu yêu cầu khảo sát của bạn là:</p><h2 style="letter-spacing:4px">${code}</h2><p>Mã hết hạn sau 10 phút.</p>`,
+    ...otpEmail(code),
   });
 
   recordAudit({ actorId: null, actorLabel: "Hệ thống", action: "otp.issued", entityType: "case", entityId: caseId, metadata: { email, provider: adapter.mode } });
 
   // devCode chỉ trả về khi email ở chế độ mock VÀ không phải production (tránh lộ OTP qua HTTP response).
   const exposeDevCode = isEmailMock() && process.env.NODE_ENV !== "production";
-  return { challengeId: challenge.id, email, otpSent: true, ...(exposeDevCode ? { devCode: code } : {}) };
+  return { challengeId: challengeToken(challenge), email, otpSent: true, ...(exposeDevCode ? { devCode: code } : {}) };
+}
+
+export async function reissueOtpByChallenge(challengeId: string): Promise<OtpIssueResult> {
+  const db = getDb();
+  const token = parseChallengeToken(challengeId);
+  const current = db.otpChallenges.find((c) => c.id === (token?.id ?? challengeId));
+  if (!current && !token) throw new OtpError("Mã xác thực không tồn tại. Vui lòng gửi lại mã mới.");
+  if (current?.verified) throw new OtpError("Email đã được xác thực. Vui lòng tiếp tục quy trình.");
+  if (!current && token) {
+    const lastIssued = new Date(token.createdAt).getTime();
+    if (Date.now() - lastIssued < ISSUE_COOLDOWN_MS) {
+      throw new OtpError("Bạn vừa yêu cầu mã. Vui lòng đợi khoảng 1 phút trước khi yêu cầu mã mới.");
+    }
+    const code = String(randomInt(0, 1_000_000)).padStart(6, "0");
+    const now = new Date();
+    const nextChallenge = {
+      id: createId("otp"),
+      caseId: token.caseId,
+      email: token.email,
+      codeHash: hashCode(code),
+      expiresAt: new Date(now.getTime() + TTL_MS).toISOString(),
+      attempts: 0,
+      verified: false,
+      createdAt: now.toISOString(),
+    };
+    const adapter = getEmailAdapter();
+    await adapter.send({ to: token.email, ...otpEmail(code) });
+    const exposeDevCode = isEmailMock() && process.env.NODE_ENV !== "production";
+    return { challengeId: challengeToken(nextChallenge), email: token.email, otpSent: true, ...(exposeDevCode ? { devCode: code } : {}) };
+  }
+  if (!current) throw new OtpError("Mã xác thực không tồn tại. Vui lòng gửi lại mã mới.");
+  return issueOtpForCase(current.caseId);
 }
 
 /**
@@ -173,7 +299,8 @@ export function loginWithVerifiedEmail(email: string): string | null {
 
 export async function verifyOtp(challengeId: string, code: string): Promise<{ caseId: string; userId: string | null }> {
   const db = getDb();
-  const ch = db.otpChallenges.find((c) => c.id === challengeId);
+  const token = parseChallengeToken(challengeId);
+  const ch = db.otpChallenges.find((c) => c.id === (token?.id ?? challengeId)) ?? (token ? { ...token, attempts: 0, verified: false } : null);
   if (!ch) throw new OtpError("Mã xác thực không tồn tại.");
   if (ch.verified) return { caseId: ch.caseId, userId: ensureCustomerAccount(ch.caseId) };
   if (new Date(ch.expiresAt).getTime() < Date.now()) throw new OtpError("Mã xác thực đã hết hạn. Vui lòng yêu cầu mã mới.");
@@ -201,8 +328,7 @@ export async function verifyOtp(challengeId: string, code: string): Promise<{ ca
   const adapter = getEmailAdapter();
   await adapter.send({
     to: ch.email,
-    subject: "Đã tiếp nhận phiếu yêu cầu khảo sát — Luật Ngọc Sơn",
-    text: "Cảm ơn bạn. Bộ phận tiếp nhận sẽ kiểm tra thông tin, thực hiện conflict check và liên hệ gửi báo phí/hợp đồng trong thời gian sớm nhất.",
+    ...receivedEmail(),
   });
 
   return { caseId: ch.caseId, userId };

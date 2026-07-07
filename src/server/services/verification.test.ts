@@ -1,7 +1,7 @@
 import { describe, it, expect, beforeEach } from "vitest";
 import { __resetStore, getDb } from "@/server/db";
 import { createLeadFromSurvey } from "./leads";
-import { issueOtpForCase, verifyOtp, loginWithVerifiedEmail, OtpError } from "./verification";
+import { issueOtpForCase, reissueOtpByChallenge, verifyOtp, loginWithVerifiedEmail, OtpError } from "./verification";
 
 const lead = {
   companyName: "Cong ty OTP",
@@ -81,6 +81,25 @@ describe("OTP verification (Giai đoạn 1)", () => {
     const wrong = r.devCode === "000000" ? "111111" : "000000";
     await expect(verifyOtp(r.challengeId, wrong)).rejects.toBeInstanceOf(OtpError);
     expect(getDb().cases.find((c) => c.id === caseId)?.status).toBe("lead_new");
+  });
+
+  it("gửi lại OTP sau cooldown ⇒ trả challenge mới", async () => {
+    const { caseId } = createLeadFromSurvey(lead);
+    const r1 = await issueOtpForCase(caseId);
+    getDb().otpChallenges[0].createdAt = new Date(Date.now() - 61_000).toISOString();
+    const r2 = await reissueOtpByChallenge(r1.challengeId);
+    expect(r2.otpSent).toBe(true);
+    expect(r2.challengeId).not.toBe(r1.challengeId);
+    expect(r2.devCode).toMatch(/^\d{6}$/);
+  });
+
+  it("signed challenge vẫn xác thực được khi store không còn OTP", async () => {
+    const { caseId } = createLeadFromSurvey(lead);
+    const r = await issueOtpForCase(caseId);
+    __resetStore();
+    const res = await verifyOtp(r.challengeId, r.devCode!);
+    expect(res.caseId).toBe(caseId);
+    expect(res.userId).toBeNull();
   });
 
   it("challenge không tồn tại ⇒ OtpError", async () => {

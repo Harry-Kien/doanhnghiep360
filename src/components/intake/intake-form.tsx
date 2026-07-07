@@ -4,7 +4,7 @@ import * as React from "react";
 import Link from "next/link";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { ArrowLeft, ArrowRight, CheckCircle2, Loader2, ShieldCheck } from "lucide-react";
+import { ArrowLeft, ArrowRight, CheckCircle2, Loader2, RefreshCw, ShieldCheck } from "lucide-react";
 import { surveyRequestSchema, type SurveyRequestInput } from "@/shared/schemas";
 import { SURVEY_SCOPE, BUSINESS_TYPES } from "@/shared/constants";
 import { Button, buttonVariants } from "@/components/ui/button";
@@ -33,6 +33,9 @@ export function IntakeForm() {
   const [otpCode, setOtpCode] = React.useState("");
   const [otpPending, setOtpPending] = React.useState(false);
   const [otpError, setOtpError] = React.useState<string | null>(null);
+  const [resendPending, setResendPending] = React.useState(false);
+  const [resendCooldown, setResendCooldown] = React.useState(0);
+  const [resendInfo, setResendInfo] = React.useState<string | null>(null);
 
   const form = useForm<SurveyRequestInput>({
     resolver: zodResolver(surveyRequestSchema),
@@ -59,6 +62,12 @@ export function IntakeForm() {
   } = form;
 
   const scope = watch("scope") ?? [];
+
+  React.useEffect(() => {
+    if (resendCooldown <= 0) return;
+    const timer = window.setInterval(() => setResendCooldown((value) => Math.max(0, value - 1)), 1000);
+    return () => window.clearInterval(timer);
+  }, [resendCooldown]);
 
   function toggleScope(key: string) {
     const next = scope.includes(key) ? scope.filter((s) => s !== key) : [...scope, key];
@@ -87,6 +96,8 @@ export function IntakeForm() {
       const dup = Boolean(d.duplicateWarning);
       if (d.otpSent && d.challengeId) {
         setSubmit({ status: "otp", challengeId: d.challengeId, email: values.email, devCode: d.devCode, duplicateWarning: dup });
+        setResendCooldown(60);
+        setResendInfo(null);
       } else {
         // Không gửi được OTP (vd lỗi email) — vẫn tiếp nhận lead.
         setSubmit({ status: "success", duplicateWarning: dup });
@@ -119,6 +130,34 @@ export function IntakeForm() {
     }
   }
 
+  async function resendOtp() {
+    if (submit.status !== "otp") return;
+    setResendPending(true);
+    setOtpError(null);
+    setResendInfo(null);
+    try {
+      const res = await fetch("/api/otp/resend", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ challengeId: submit.challengeId }),
+      });
+      const json = await res.json();
+      if (!res.ok || !json.ok) {
+        setOtpError(json?.error?.message ?? "Không thể gửi lại mã. Vui lòng thử lại.");
+        return;
+      }
+      const d = json.data ?? {};
+      setSubmit({ ...submit, challengeId: d.challengeId ?? submit.challengeId, devCode: d.devCode });
+      setOtpCode("");
+      setResendCooldown(60);
+      setResendInfo("Mã mới đã được gửi. Vui lòng kiểm tra hộp thư đến hoặc mục spam/quảng cáo nếu chưa thấy ngay.");
+    } catch {
+      setOtpError("Không thể kết nối máy chủ để gửi lại mã.");
+    } finally {
+      setResendPending(false);
+    }
+  }
+
   if (submit.status === "otp") {
     return (
       <Card className="mx-auto max-w-md p-8">
@@ -147,7 +186,24 @@ export function IntakeForm() {
           {otpPending ? <Loader2 className="size-4 animate-spin" /> : <ShieldCheck className="size-4" />}
           Xác nhận & gửi phiếu
         </Button>
-        <p className="mt-3 text-center text-xs text-muted-foreground">Mã hết hạn sau 10 phút.</p>
+        <div className="mt-4 rounded-lg border border-border bg-secondary/40 p-3 text-center">
+          <p className="text-xs text-muted-foreground">Mã hết hạn sau 10 phút.</p>
+          {resendInfo ? <p className="mt-2 text-xs text-emerald-700">{resendInfo}</p> : null}
+          <Button
+            type="button"
+            variant="ghost"
+            size="sm"
+            className="mt-2"
+            onClick={resendOtp}
+            disabled={resendPending || resendCooldown > 0}
+          >
+            {resendPending ? <Loader2 className="size-4 animate-spin" /> : <RefreshCw className="size-4" />}
+            {resendCooldown > 0 ? `Gửi lại mã sau ${resendCooldown}s` : "Gửi lại mã OTP"}
+          </Button>
+          <p className="mt-2 text-[11px] leading-5 text-muted-foreground">
+            Nếu chưa thấy email, vui lòng kiểm tra hộp thư đến, spam hoặc tab quảng cáo.
+          </p>
+        </div>
       </Card>
     );
   }
