@@ -169,11 +169,15 @@ export const DEMO_PASSWORD = "legal360";
 // Hash 1 lần/tiến trình (scrypt tốn CPU) — tái dùng cho mọi lần seed.
 let cachedPwHash: string | null = null;
 
+function stableUserId(email: string): string {
+  return `usr_${email.trim().toLowerCase().replace(/[^a-z0-9]+/g, "_").replace(/^_+|_+$/g, "")}`;
+}
+
 function buildUsers(): User[] {
   const now = daysAgo(30);
   const pw = (cachedPwHash ??= hashPassword(DEMO_PASSWORD));
   return USERS.map((u) => ({
-    id: createId("usr"),
+    id: stableUserId(u.email),
     email: u.email,
     phone: null,
     fullName: u.fullName,
@@ -222,7 +226,7 @@ function normalizeSeededUsers(db: ReturnType<typeof rawDb>, demoMode: boolean): 
     }
 
     db.users.push({
-      id: createId("usr"),
+      id: stableUserId(userSpec.email),
       email: userSpec.email,
       phone: null,
       fullName: userSpec.fullName,
@@ -259,7 +263,7 @@ export function ensureSeeded(): void {
   if (!demoMode) {
     const now = new Date().toISOString();
     db.users.push({
-      id: createId("usr"),
+      id: stableUserId((process.env.ADMIN_EMAIL || "admin@legal360.vn").trim().toLowerCase()),
       email: (process.env.ADMIN_EMAIL || "admin@legal360.vn").trim().toLowerCase(),
       phone: null,
       fullName: "Ths-Ls. Lý Ngọc Sơn",

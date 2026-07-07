@@ -78,6 +78,10 @@ function hashCode(code: string): string {
   return createHmac("sha256", appSecret()).update(`otp:${code}`).digest("hex");
 }
 
+function stableCustomerId(email: string): string {
+  return `usr_customer_${email.trim().toLowerCase().replace(/[^a-z0-9]+/g, "_").replace(/^_+|_+$/g, "")}`;
+}
+
 interface SignedOtpChallenge {
   id: string;
   caseId: string;
@@ -228,7 +232,7 @@ function ensureCustomerAccount(caseId: string): string | null {
   if (!user) {
     const now = new Date().toISOString();
     user = {
-      id: createId("usr"),
+      id: stableCustomerId(email),
       email: contact.email,
       phone: contact.phone ?? null,
       fullName: contact.fullName,
